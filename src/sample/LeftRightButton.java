@@ -1,8 +1,5 @@
 package sample;
 
-import javafx.animation.FillTransition;
-import javafx.animation.ParallelTransition;
-import javafx.animation.TranslateTransition;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.scene.Parent;
@@ -10,7 +7,6 @@ import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
-import javafx.util.Duration;
 
 public class LeftRightButton extends Parent{
 
