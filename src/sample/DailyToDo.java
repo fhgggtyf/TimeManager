@@ -46,7 +46,6 @@ public class DailyToDo extends Parent {
         return root;
     }
 
-
     public DailyToDo(){
         // Show scene
         VBox back = new VBox();
