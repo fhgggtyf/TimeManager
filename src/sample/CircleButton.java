@@ -11,6 +11,6 @@ public class CircleButton extends Parent {
 
         Circle circle = new Circle(26);
         circle.setFill(new ImagePattern(image));
-        getChildren().addAll(circle);
+        getChildren().add(circle);
     }
 }
