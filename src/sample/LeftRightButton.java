@@ -41,8 +41,7 @@ public class LeftRightButton extends Parent{
             rightButton.setOnMouseClicked(e -> {
                 System.out.println("rightclicked");
             });
-
-
+            
             getChildren().addAll(background,leftButton,rightButton);
         }
 }
