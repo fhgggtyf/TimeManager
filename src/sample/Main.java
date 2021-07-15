@@ -13,7 +13,7 @@ import java.util.Calendar;
 public class Main extends Application {
 
     @Override
-    public void start(Stage primaryStage) throws Exception{
+    public void start(Stage primaryStage){
         primaryStage.setTitle("Hello World");
         Pane background = new Pane();
         background.getChildren().addAll(new CreateEvent());
