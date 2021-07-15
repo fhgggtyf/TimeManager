@@ -14,6 +14,7 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 
+//注释部分是用户进行删除事件操作的状态下的排版，如果需要应用该排版，需要将注释句子的上一行更改为注释
 public class EventManagement extends Parent {
     public EventManagement(){
         HBox topMenu = new HBox();
