@@ -23,7 +23,7 @@ public class Main extends Application {
 
 
     public static void main(String[] args) throws Exception {
-        File file = new File("C:\\Users\\夏嘉程\\IdeaProjects\\TimeManager(1)\\out\\data\\out.out");
+        File file = new File(".\\out\\data\\out.out");
         OutputStream output = new FileOutputStream(file);
         if(!file.getParentFile().exists()){ //如果文件的目录不存在
             file.getParentFile().mkdirs(); //创建目录
