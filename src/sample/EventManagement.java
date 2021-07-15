@@ -10,6 +10,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 
@@ -17,15 +18,18 @@ public class EventManagement extends Parent {
     public EventManagement(){
         HBox topMenu = new HBox();
         topMenu.setPrefSize(375,97);
-        topMenu.setAlignment(Pos.CENTER);
+        topMenu.setAlignment(Pos.CENTER_LEFT);
+        topMenu.setPadding(new Insets(28,23,23,15));
         CircleButton arrow = new CircleButton(new Image("img/arrow.PNG"));
         Pane upSpace1 = new Pane();
-        upSpace1.setPrefSize(22,51);
+        upSpace1.setPrefSize(21,51);
         CircleButton folder = new CircleButton(new Image("img/folder.PNG"));
         Pane upSpace2 = new Pane();
         upSpace2.setPrefSize(161,97);
         CircleButton trashBin = new CircleButton(new Image("img/trashBin.PNG"));
+        CircleButton confirm = new CircleButton(new Image("img/confirm.PNG"));
         topMenu.getChildren().addAll(arrow,upSpace1,folder,upSpace2,trashBin);
+        //topMenu.getChildren().addAll(arrow,upSpace1,folder,upSpace2,confirm);
 
 
 
@@ -34,7 +38,7 @@ public class EventManagement extends Parent {
         centerBack.setPadding(new Insets(10));
         centerBack.setSpacing(9);
         centerBack.getStyleClass().add("light-background");
-        centerBack.getChildren().addAll(new eventSquare("TOK","03:40","06:40","","blue"),
+        centerBack.getChildren().addAll(new eventSquare("TOK","03:40","06:40","note","blue"),
                 new eventSquare("Econ","08:52","11:52","","blue"),
                 new eventSquare("Do Chores","16:09","17:28","","yellow"));
         HBox centerAll = new HBox();
@@ -99,19 +103,38 @@ public class EventManagement extends Parent {
             Rectangle separationLine = new Rectangle(4,50);
             separationLine.setFill(Color.rgb(167,167,167,1));
 
+            Boolean noteStatus = Boolean.TRUE;
             if(note.equals("")){
                 note = "No description";
+                noteStatus = Boolean.FALSE;
             }
             Label description = new Label(note);
             description.setPrefSize(150,50);
-            description.getStyleClass().add("description-label");
+            if(noteStatus){
+                description.getStyleClass().add("descriptionActivated-label");
+            }else{
+                description.getStyleClass().add("descriptionNull-label");
+            }
+
+            Pane middleSpace = new Pane();
+            middleSpace.setPrefSize(111,35);
+
+            Rectangle cancelImage = new Rectangle(20.42,20.42);
+            cancelImage.setFill(new ImagePattern(new Image("img/cancel.PNG")));
+            HBox cancelButton = new HBox();
+            cancelButton.setPrefSize(35,35);
+            cancelButton.setAlignment(Pos.CENTER);
+            cancelButton.getChildren().add(cancelImage);
+
 
             HBox backSquareContainer = new HBox();
             backSquareContainer.setPrefSize(300,50);
+            //backSquareContainer.setPrefSize(306,50);
             backSquareContainer.setSpacing(12.5);
             backSquareContainer.setLayoutX(13);
             backSquareContainer.setLayoutY(7);
             backSquareContainer.getChildren().addAll(eventSquareLeft,separationLine,description);
+            //backSquareContainer.getChildren().addAll(eventSquareLeft,separationLine,middleSpace,cancelButton);
 
             Rectangle backSquareBackground = new Rectangle(325,63,Color.rgb(196,196,196,0.3));
             backSquareBackground.setArcWidth(10);
