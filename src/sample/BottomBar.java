@@ -41,11 +41,11 @@ public class BottomBar extends Parent {
         separationLine.setStrokeWidth(2);
         separationLine.setStroke(Color.rgb(167, 167, 167, 1));
 
-        CircleButton addButton = new CircleButton(new Image("img/AddButton.png"),new Image("img/AddButton.png"));
+        CircleButton addButton = new CircleButton(new Image("img/AddButton.png"));
         addButton.setLayoutX(236);
         addButton.setLayoutY(50);
 
-        CircleButton backButton = new CircleButton(new Image("img/BackButton.png"),new Image("img/BackButton.png"));
+        CircleButton backButton = new CircleButton(new Image("img/BackButton.png"));
         backButton.setLayoutX(301);
         backButton.setLayoutY(50);
         backButton.setManaged(visibility);
