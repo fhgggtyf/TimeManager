@@ -10,7 +10,7 @@ import javafx.scene.shape.*;
 
 public class BottomBar extends Parent {
 
-    public BottomBar(String month, String day){
+    public BottomBar(String month, String day, Boolean visibility){
         Pane botBarBack = new Pane();
         botBarBack.setPrefSize(375,120);
 
@@ -41,13 +41,16 @@ public class BottomBar extends Parent {
         separationLine.setStrokeWidth(2);
         separationLine.setStroke(Color.rgb(167, 167, 167, 1));
 
-        CircleButton addButton = new CircleButton(new Image("img/AddButton.png"));
+        CircleButton addButton = new CircleButton(new Image("img/AddButton.png"),new Image("img/AddButton.png"));
         addButton.setLayoutX(236);
         addButton.setLayoutY(50);
 
-        CircleButton backButton = new CircleButton(new Image("img/BackButton.png"));
+        CircleButton backButton = new CircleButton(new Image("img/BackButton.png"),new Image("img/BackButton.png"));
         backButton.setLayoutX(301);
         backButton.setLayoutY(50);
+        backButton.setManaged(visibility);
+        backButton.setVisible(visibility);
+
 
         LeftRightButton leftRightButton = new LeftRightButton();
         leftRightButton.setLayoutX(102);

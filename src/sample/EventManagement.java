@@ -14,6 +14,8 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 
+import java.util.concurrent.atomic.AtomicBoolean;
+
 //注释部分是用户进行删除事件操作的状态下的排版，如果需要应用该排版，需要将注释句子的上一行更改为注释
 public class EventManagement extends Parent {
     public EventManagement(){
@@ -21,16 +23,14 @@ public class EventManagement extends Parent {
         topMenu.setPrefSize(375,97);
         topMenu.setAlignment(Pos.CENTER_LEFT);
         topMenu.setPadding(new Insets(28,23,23,15));
-        CircleButton arrow = new CircleButton(new Image("img/arrow.PNG"));
+        CircleButton arrow = new CircleButton(new Image("img/arrow.PNG"),new Image("img/arrow.PNG"));
         Pane upSpace1 = new Pane();
         upSpace1.setPrefSize(21,51);
-        CircleButton folder = new CircleButton(new Image("img/folder.PNG"));
+        CircleButton folder = new CircleButton(new Image("img/folder.PNG"),new Image("img/folder.PNG"));
         Pane upSpace2 = new Pane();
         upSpace2.setPrefSize(161,97);
-        CircleButton trashBin = new CircleButton(new Image("img/trashBin.PNG"));
-        CircleButton confirm = new CircleButton(new Image("img/confirm.PNG"));
+        CircleButton trashBin = new CircleButton(new Image("img/trashBin.PNG"),new Image("img/confirm.PNG"));
         topMenu.getChildren().addAll(arrow,upSpace1,folder,upSpace2,trashBin);
-        //topMenu.getChildren().addAll(arrow,upSpace1,folder,upSpace2,confirm);
 
 
 
@@ -49,7 +49,7 @@ public class EventManagement extends Parent {
 
 
 
-        BottomBar bottomBar = new BottomBar("Feb","6");
+        BottomBar bottomBar = new BottomBar("Feb","6",false);
         bottomBar.setLayoutY(18);
         Pane bottomAll = new Pane();
         bottomAll.setPrefSize(375,137);
@@ -128,9 +128,9 @@ public class EventManagement extends Parent {
             cancelButton.getChildren().add(cancelImage);
 
 
+
             HBox backSquareContainer = new HBox();
-            backSquareContainer.setPrefSize(300,50);
-            //backSquareContainer.setPrefSize(306,50);
+            backSquareContainer.setPrefSize(306,50);
             backSquareContainer.setSpacing(12.5);
             backSquareContainer.setLayoutX(13);
             backSquareContainer.setLayoutY(7);

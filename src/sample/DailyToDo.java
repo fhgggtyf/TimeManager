@@ -50,7 +50,7 @@ public class DailyToDo extends Parent {
         // Show scene
         VBox back = new VBox();
 
-        BottomBar bottomBar = new BottomBar("FEB","6");
+        BottomBar bottomBar = new BottomBar("FEB","6",true);
         bottomBar.setLayoutY(547);
 
         back.getChildren().addAll(dayBar(),bottomBar);

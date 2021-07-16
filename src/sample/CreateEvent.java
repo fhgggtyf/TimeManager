@@ -39,8 +39,8 @@ public class CreateEvent extends Parent {
         Pane buttonFix = new Pane();
         buttonFix.setPrefSize(344,80);
 
-        CircleButton backButton = new CircleButton(new Image("img/back_button.png"));
-        CircleButton saveButton = new CircleButton(new Image("img/save_button.png"));
+        CircleButton backButton = new CircleButton(new Image("img/back_button.png"),new Image("img/back_button.png"));
+        CircleButton saveButton = new CircleButton(new Image("img/save_button.png"),new Image("img/save_button.png"));
         backButton.setLayoutX(26);
         backButton.setLayoutY(53);
         saveButton.setLayoutX(100);
