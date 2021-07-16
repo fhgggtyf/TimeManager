@@ -1,5 +1,7 @@
 package sample;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
@@ -23,13 +25,29 @@ public class EventManagement extends Parent {
         topMenu.setPrefSize(375,97);
         topMenu.setAlignment(Pos.CENTER_LEFT);
         topMenu.setPadding(new Insets(28,23,23,15));
-        CircleButton arrow = new CircleButton(new Image("img/arrow.PNG"),new Image("img/arrow.PNG"));
+        CircleButton arrow = new CircleButton(new Image("img/arrow.PNG"));
         Pane upSpace1 = new Pane();
         upSpace1.setPrefSize(21,51);
-        CircleButton folder = new CircleButton(new Image("img/folder.PNG"),new Image("img/folder.PNG"));
+        CircleButton folder = new CircleButton(new Image("img/folder.PNG"));
         Pane upSpace2 = new Pane();
         upSpace2.setPrefSize(161,97);
-        CircleButton trashBin = new CircleButton(new Image("img/trashBin.PNG"),new Image("img/confirm.PNG"));
+
+        BooleanProperty trash = new SimpleBooleanProperty(true);
+        CircleButton trashBin = new CircleButton(new Image("img/trashBin.PNG"));
+        trash.addListener((obs,oldState,newState)->{
+            boolean isOn = newState.booleanValue();
+            if(isOn){
+                trashBin.setImage(new Image("img/confirm.PNG"));
+
+            }
+            else{
+                trashBin.setImage(new Image("img/trashBin.PNG"));
+            }
+        });
+        trashBin.setOnMouseClicked(e ->{
+            trash.set(!trash.get());
+        });
+
         topMenu.getChildren().addAll(arrow,upSpace1,folder,upSpace2,trashBin);
 
 
