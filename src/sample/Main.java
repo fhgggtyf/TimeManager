@@ -38,8 +38,6 @@ public class Main extends Application {
             output.write(data);
         }
         output.close();
-
-
         launch(args);
     }
 }
