@@ -1,0 +1,47 @@
+.time-label{
+    -fx-font-family: "Roboto Light";
+    -fx-font-style: normal;
+    -fx-font-weight: 700;
+    -fx-font-size: 18;
+    -fx-text-fill: WHITE;
+    -fx-display: flex;
+    -fx-alignment: center;
+}
+
+.name-label{
+    -fx-font-family: "Roboto Light";
+    -fx-font-style: normal;
+    -fx-font-weight: 700;
+    -fx-font-size: 14;
+    -fx-text-fill: WHITE;
+    -fx-display: flex;
+    -fx-alignment: center;
+}
+
+.descriptionNull-label{
+    -fx-font-family: "Roboto Light";
+    -fx-font-style: normal;
+    -fx-font-weight: 700;
+    -fx-font-size: 16;
+    -fx-text-fill: rgba(196,196,196,0.6);
+    -fx-display: flex;
+    -fx-alignment: top_left;
+}
+
+.descriptionActivated-label{
+    -fx-font-family: "Roboto Light";
+    -fx-font-style: normal;
+    -fx-font-weight: 700;
+    -fx-font-size: 16;
+    -fx-text-fill: WHITE;
+    -fx-display: flex;
+    -fx-alignment: top_left;
+}
+
+.light-background{
+    -fx-background-color: rgba(165,165,165,0.3);
+}
+
+.dark-background{
+    -fx-background-color: rgba(115,115,115,1);
+}
