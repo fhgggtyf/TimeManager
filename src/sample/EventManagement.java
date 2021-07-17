@@ -16,6 +16,8 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 //注释部分是用户进行删除事件操作的状态下的排版，如果需要应用该排版，需要将注释句子的上一行更改为注释
@@ -34,46 +36,60 @@ public class EventManagement extends Parent {
 
         BooleanProperty trash = new SimpleBooleanProperty(true);
         CircleButton trashBin = new CircleButton(new Image("img/trashBin.PNG"));
-        trash.addListener((obs,oldState,newState)->{
-            boolean isOn = newState.booleanValue();
-            if(isOn){
-                trashBin.setImage(new Image("img/confirm.PNG"));
-
-            }
-            else{
-                trashBin.setImage(new Image("img/trashBin.PNG"));
-            }
-        });
-        trashBin.setOnMouseClicked(e ->{
-            trash.set(!trash.get());
-        });
 
         topMenu.getChildren().addAll(arrow,upSpace1,folder,upSpace2,trashBin);
-
-
 
         VBox centerBack = new VBox();
         centerBack.setPrefSize(344,433);
         centerBack.setPadding(new Insets(10));
         centerBack.setSpacing(9);
         centerBack.getStyleClass().add("light-background");
-        centerBack.getChildren().addAll(new eventSquare("TOK","03:40","06:40","note","blue"),
-                new eventSquare("Econ","08:52","11:52","","blue"),
-                new eventSquare("Do Chores","16:09","17:28","","yellow"));
+        //这里之后要用eventList代替
+        ArrayList<EventSquare> eventSquareArrayList = new ArrayList<EventSquare>();
+        EventSquare event1 = new EventSquare("TOK","03:40","06:40","note","blue",trash);
+        EventSquare event2 = new EventSquare("Econ","08:52","11:52","","blue",trash);
+        EventSquare event3 = new EventSquare("Do Chores","16:09","17:28","","yellow",trash);
+        eventSquareArrayList.add(event1);
+        eventSquareArrayList.add(event2);
+        eventSquareArrayList.add(event3);
+        for(int i = 0; i < eventSquareArrayList.size(); i++){
+            centerBack.getChildren().addAll(eventSquareArrayList.get(i));
+        }
+
         HBox centerAll = new HBox();
         centerAll.setAlignment(Pos.CENTER);
         centerAll.setPrefSize(375,433);
+
+        trash.addListener((obs,oldState,newState)->{
+            boolean isOn = newState;
+            if(isOn){
+                trashBin.setImage(new Image("img/confirm.PNG"));
+                centerBack.getChildren().clear();
+                for(int i = 0; i < eventSquareArrayList.size(); i++){
+                    eventSquareArrayList.get(i).setDesOrDel(true);
+                    centerBack.getChildren().add(eventSquareArrayList.get(i));
+                }
+            }
+            else{
+                trashBin.setImage(new Image("img/trashBin.PNG"));
+                centerBack.getChildren().clear();
+                for(int i = 0; i < eventSquareArrayList.size(); i++){
+                    eventSquareArrayList.get(i).setDesOrDel(false);
+                    centerBack.getChildren().add(eventSquareArrayList.get(i));
+                }
+            }
+        });
+        trashBin.setOnMouseClicked(e ->{
+            trash.set(!trash.get());
+        });
+
         centerAll.getChildren().add(centerBack);
-
-
 
         BottomBar bottomBar = new BottomBar("Feb","6",false);
         bottomBar.setLayoutY(18);
         Pane bottomAll = new Pane();
         bottomAll.setPrefSize(375,137);
         bottomAll.getChildren().addAll(bottomBar);
-
-
 
         BorderPane borderPane = new BorderPane();
         borderPane.setPrefSize(375,667);
@@ -86,10 +102,79 @@ public class EventManagement extends Parent {
         getChildren().add(borderPane);
     }
 
+    public static class EventSquare extends Parent{
 
+        public String name;
+        public String startTime;
+        public String endTime;
+        public String note;
+        public String color;
+        public BooleanProperty desOrDel;
 
-    public static class eventSquare extends Parent{
-        public eventSquare(String name, String startTime, String endTime,String note,String color){
+        public EventSquare(String name, String startTime, String endTime, String note, String color, BooleanProperty desOrDel) {
+            this.name = name;
+            this.startTime = startTime;
+            this.endTime = endTime;
+            this.note = note;
+            this.color = color;
+            this.desOrDel = desOrDel;
+            refreshDisplay();
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public String getStartTime() {
+            return startTime;
+        }
+
+        public void setStartTime(String startTime) {
+            this.startTime = startTime;
+        }
+
+        public String getEndTime() {
+            return endTime;
+        }
+
+        public void setEndTime(String endTime) {
+            this.endTime = endTime;
+        }
+
+        public String getNote() {
+            return note;
+        }
+
+        public void setNote(String note) {
+            this.note = note;
+        }
+
+        public String getColor() {
+            return color;
+        }
+
+        public void setColor(String color) {
+            this.color = color;
+        }
+
+        public boolean isDesOrDel() {
+            return desOrDel.get();
+        }
+
+        public BooleanProperty desOrDelProperty() {
+            return desOrDel;
+        }
+
+        public void setDesOrDel(boolean desOrDel) {
+            this.desOrDel.set(desOrDel);
+            refreshDisplay();
+        }
+
+        public void refreshDisplay(){
             Label eventName = new Label(name);
             eventName.getStyleClass().add("name-label");
             eventName.setPrefSize(120,20);
@@ -119,7 +204,7 @@ public class EventManagement extends Parent {
             eventSquareLeft.setAlignment(Pos.CENTER);
             eventSquareLeft.getChildren().addAll(eventNameBack,eventTimeBack);
 
-            Rectangle separationLine = new Rectangle(4,50);
+            Rectangle separationLine = new Rectangle(2,50);
             separationLine.setFill(Color.rgb(167,167,167,1));
 
             Boolean noteStatus = Boolean.TRUE;
@@ -145,15 +230,13 @@ public class EventManagement extends Parent {
             cancelButton.setAlignment(Pos.CENTER);
             cancelButton.getChildren().add(cancelImage);
 
-
-
             HBox backSquareContainer = new HBox();
             backSquareContainer.setPrefSize(306,50);
             backSquareContainer.setSpacing(12.5);
             backSquareContainer.setLayoutX(13);
             backSquareContainer.setLayoutY(7);
             backSquareContainer.getChildren().addAll(eventSquareLeft,separationLine,description);
-            //backSquareContainer.getChildren().addAll(eventSquareLeft,separationLine,middleSpace,cancelButton);
+
 
             Rectangle backSquareBackground = new Rectangle(325,63,Color.rgb(196,196,196,0.3));
             backSquareBackground.setArcWidth(10);
