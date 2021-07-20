@@ -5,15 +5,19 @@
  */
 package sample;
 
+import javafx.scene.Parent;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
+
 /**
  *
  * @author Maggie
  */
 public class Group {
     private String name; //组别名称
-    private String color; //组别代表色
+    private Paint color; //组别代表色
 
-    public Group(String name, String color) {
+    public Group(String name, Paint color) {
         this.name = name;
         this.color = color;
     }
@@ -22,15 +26,13 @@ public class Group {
         return name;
     }
 
-    public String getColor() {
-        return color;
-    }
+    public Paint getColor() { return color; }
 
     public void setName(String name) {
         this.name = name;
     }
 
-    public void setColor(String color) {
+    public void setColor(Color color) {
         this.color = color;
     }
     
