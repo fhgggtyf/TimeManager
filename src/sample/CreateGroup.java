@@ -1,7 +1,6 @@
 package sample;
 
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.TextFormatter;
 import javafx.scene.image.Image;
@@ -9,13 +8,9 @@ import javafx.scene.layout.*;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
-import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.control.Label;
 import javafx.scene.text.Font;
-
-import java.awt.*;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 public class CreateGroup extends Parent{
 
@@ -95,6 +90,32 @@ public class CreateGroup extends Parent{
                 new row(blue1,blue2,blue3,blue4,blue5),
                 new row(purple1,purple2,purple3,purple4,purple5));
 
+        red1.setOnMouseClicked(e -> colorSelected=red1.getColor());
+        red2.setOnMouseClicked(e -> colorSelected=red2.getColor());
+        red3.setOnMouseClicked(e -> colorSelected=red3.getColor());
+        red4.setOnMouseClicked(e -> colorSelected=red4.getColor());
+        red5.setOnMouseClicked(e -> colorSelected=red5.getColor());
+        yellow1.setOnMouseClicked(e -> colorSelected=yellow1.getColor());
+        yellow2.setOnMouseClicked(e -> colorSelected=yellow2.getColor());
+        yellow3.setOnMouseClicked(e -> colorSelected=yellow3.getColor());
+        yellow4.setOnMouseClicked(e -> colorSelected=yellow4.getColor());
+        yellow5.setOnMouseClicked(e -> colorSelected=yellow5.getColor());
+        green1.setOnMouseClicked(e -> colorSelected=green1.getColor());
+        green2.setOnMouseClicked(e -> colorSelected=green2.getColor());
+        green3.setOnMouseClicked(e -> colorSelected=green3.getColor());
+        green4.setOnMouseClicked(e -> colorSelected=green4.getColor());
+        green5.setOnMouseClicked(e -> colorSelected=green5.getColor());
+        blue1.setOnMouseClicked(e -> colorSelected=blue1.getColor());
+        blue2.setOnMouseClicked(e -> colorSelected=blue2.getColor());
+        blue3.setOnMouseClicked(e -> colorSelected=blue3.getColor());
+        blue4.setOnMouseClicked(e -> colorSelected=blue4.getColor());
+        blue5.setOnMouseClicked(e -> colorSelected=blue5.getColor());
+        purple1.setOnMouseClicked(e -> colorSelected=purple1.getColor());
+        purple2.setOnMouseClicked(e -> colorSelected=purple2.getColor());
+        purple3.setOnMouseClicked(e -> colorSelected=purple3.getColor());
+        purple4.setOnMouseClicked(e -> colorSelected=purple4.getColor());
+        purple5.setOnMouseClicked(e -> colorSelected=purple5.getColor());
+
 
 
         HBox colorAll = new HBox();
@@ -128,22 +149,6 @@ public class CreateGroup extends Parent{
         vBox.getStyleClass().add("dark-background");
         Font.getFamilies();
         getChildren().add(vBox);
-    }
-
-    public static class ColorSelect extends Parent {
-        Color color;
-        AtomicBoolean isClicked = new AtomicBoolean(false);
-        public ColorSelect (Integer a, Integer b, Integer c, Double d){
-            this.color = Color.rgb(a,b,c,d);
-            Circle circle = new Circle();
-            circle.setRadius(10);
-            circle.setFill(Color.rgb(a,b,c,d));
-            getChildren().add(circle);
-
-            circle.setOnMouseClicked(e->{
-                isClicked.set(true);
-            });
-        }
     }
 
     public static class row extends Parent{
