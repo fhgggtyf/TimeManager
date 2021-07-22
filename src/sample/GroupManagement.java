@@ -16,12 +16,10 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.concurrent.atomic.AtomicBoolean;
 
-public class EventManagement extends Parent {
-    public EventManagement(){
+public class GroupManagement extends Parent{
+    public GroupManagement(){
         HBox topMenu = new HBox();
         topMenu.setPrefSize(375,97);
         topMenu.setAlignment(Pos.CENTER_LEFT);
@@ -29,14 +27,15 @@ public class EventManagement extends Parent {
         CircleButton arrow = new CircleButton(new Image("img/arrow.PNG"));
         Pane upSpace1 = new Pane();
         upSpace1.setPrefSize(21,51);
-        CircleButton folder = new CircleButton(new Image("img/folder.PNG"));
+        CircleButton spaceHolder = new CircleButton(new Image("img/folder.PNG"));
+        spaceHolder.setVisible(false);
         Pane upSpace2 = new Pane();
         upSpace2.setPrefSize(161,97);
 
         BooleanProperty trash = new SimpleBooleanProperty(true);
         CircleButton trashBin = new CircleButton(new Image("img/trashBin.PNG"));
 
-        topMenu.getChildren().addAll(arrow,upSpace1,folder,upSpace2,trashBin);
+        topMenu.getChildren().addAll(arrow,upSpace1,spaceHolder,upSpace2,trashBin);
 
         VBox centerBack = new VBox();
         centerBack.setPrefSize(344,433);
@@ -44,10 +43,10 @@ public class EventManagement extends Parent {
         centerBack.setSpacing(9);
         centerBack.getStyleClass().add("light-background");
         //这里之后要用eventList代替
-        ArrayList<EventSquare> eventSquareArrayList = new ArrayList<EventSquare>();
-        EventSquare event1 = new EventSquare("TOK","03:40","06:40","note","blue",trash);
-        EventSquare event2 = new EventSquare("Econ","08:52","11:52","","blue",trash);
-        EventSquare event3 = new EventSquare("Do Chores","16:09","17:28","","yellow",trash);
+        ArrayList<EventManagement.EventSquare> eventSquareArrayList = new ArrayList<EventManagement.EventSquare>();
+        EventManagement.EventSquare event1 = new EventManagement.EventSquare("TOK","03:40","06:40","note","blue",trash);
+        EventManagement.EventSquare event2 = new EventManagement.EventSquare("Econ","08:52","11:52","","blue",trash);
+        EventManagement.EventSquare event3 = new EventManagement.EventSquare("Do Chores","16:09","17:28","","yellow",trash);
         eventSquareArrayList.add(event1);
         eventSquareArrayList.add(event2);
         eventSquareArrayList.add(event3);
@@ -101,7 +100,7 @@ public class EventManagement extends Parent {
         getChildren().add(borderPane);
     }
 
-    public static class EventSquare extends Parent{
+    public static class EventSquare extends Parent {
 
         public String name;
         public String startTime;
@@ -245,3 +244,4 @@ public class EventManagement extends Parent {
         }
     }
 }
+
