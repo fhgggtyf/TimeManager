@@ -8,17 +8,18 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 
 public class MonthBlock extends Parent {
 
-    private Parent calendar(){
+    private Parent calendar(String month, String day){
         HBox root=new HBox();
         root.setPrefSize(375,548);
 
         Pane backBoard = new Pane();
         backBoard.setPrefSize(344,371);
-        MonthBlock monthSquare = new MonthBlock();
+        MonthBlock monthSquare = new MonthBlock(month, day);
         monthSquare.setLayoutX(1);
         monthSquare.setLayoutY(2);
 
@@ -29,7 +30,7 @@ public class MonthBlock extends Parent {
         return root;
     }
 
-    public MonthBlock(){
+    public MonthBlock(String month, String day){
 
         Pane backGround = new Pane();
         backGround.setPrefSize(345,509);
@@ -47,18 +48,31 @@ public class MonthBlock extends Parent {
                 block1.setLayoutY(126+75*j);
                 block.getChildren().addAll(block1);
                 if(i+j*7+1<31){
-                    Label date1 = new Label(""+(i+j*7+1));
-                    date1.setPrefSize(24,26);
-                    date1.setAlignment(Pos.CENTER);
-                    date1.setLayoutX(50*i);
-                    date1.setLayoutY(126+75*j);
-                    date1.getStyleClass().add("time-name-label");
-                    block.getChildren().addAll(date1);
+                    if(i+j*7+1<10){
+                        Label date1 = new Label("0"+(i+j*7+1));
+                        date1.setPrefSize(24,26);
+                        date1.setAlignment(Pos.CENTER);
+                        date1.setLayoutX(50*i);
+                        date1.setLayoutY(126+75*j);
+                        date1.getStyleClass().add("time-name-label");
+                        block.getChildren().addAll(date1);
+                    }else{
+                        Label date1 = new Label(""+(i+j*7+1));
+                        date1.setPrefSize(24,26);
+                        date1.setAlignment(Pos.CENTER);
+                        date1.setLayoutX(50*i);
+                        date1.setLayoutY(126+75*j);
+                        date1.getStyleClass().add("time-name-label");
+                        block.getChildren().addAll(date1);
+                    }
+
                 }
 
                 monthCa.getChildren().addAll(block);
             }
         }
+
+
 
         Pane weekBar=new Pane();
         weekBar.setPrefSize(345,45);
@@ -123,6 +137,7 @@ public class MonthBlock extends Parent {
         list.setLayoutX(97);
         list.setLayoutY(25);
         buttons.getChildren().addAll(add,list);
+
 
         backGround.getChildren().addAll(monthCa,weekBar,buttons);
         getChildren().addAll(backGround);
