@@ -1,14 +1,33 @@
 package sample;
 
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 
 public class MonthBlock extends Parent {
+
+    private Parent calendar(){
+        HBox root=new HBox();
+        root.setPrefSize(375,548);
+
+        Pane backBoard = new Pane();
+        backBoard.setPrefSize(344,371);
+        MonthBlock monthSquare = new MonthBlock();
+        monthSquare.setLayoutX(1);
+        monthSquare.setLayoutY(2);
+
+        backBoard.getChildren().addAll(monthSquare);
+        HBox.setMargin(backBoard,new Insets(15,15,28,15));
+
+        root.getChildren().addAll(backBoard);
+        return root;
+    }
 
     public MonthBlock(){
 
