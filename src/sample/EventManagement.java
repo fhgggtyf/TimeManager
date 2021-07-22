@@ -20,7 +20,6 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-//注释部分是用户进行删除事件操作的状态下的排版，如果需要应用该排版，需要将注释句子的上一行更改为注释
 public class EventManagement extends Parent {
     public EventManagement(){
         HBox topMenu = new HBox();
