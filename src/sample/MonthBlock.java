@@ -8,12 +8,11 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
-import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 
 public class MonthBlock extends Parent {
 
-    private Parent calendar(String month, String day){
+    public static Parent calendar(String month, String day){
         HBox root=new HBox();
         root.setPrefSize(375,548);
 
@@ -138,8 +137,12 @@ public class MonthBlock extends Parent {
         list.setLayoutY(25);
         buttons.getChildren().addAll(add,list);
 
+        BottomBarWithScroll botBar = new BottomBarWithScroll(month,day);
+        botBar.setLayoutX(0);
+        botBar.setLayoutY(528);
 
-        backGround.getChildren().addAll(monthCa,weekBar,buttons);
+
+        backGround.getChildren().addAll(monthCa,weekBar,buttons,botBar);
         getChildren().addAll(backGround);
     }
 }

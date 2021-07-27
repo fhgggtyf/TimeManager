@@ -2,6 +2,43 @@
     -fx-background-color: rgba(165, 165, 165, 0.3);
 }
 
+.scroll-null-background{
+    -fx-background: transparent;
+    -fx-background-color: transparent;
+}
+
+.null-background{
+    -fx-background-color: transparent;
+}
+
+
+.scroll-bar:vertical {
+	-fx-background-color: rgba(0,0,0,0.3);
+	-fx-border-width: 0;
+	-fx-background-radius: 8em;
+    -fx-border-radius: 8em;
+    -fx-padding: -1;
+}
+
+.scroll-bar:vertical .increment-button,  .scroll-bar:vertical .decrement-button
+{
+	-fx-background-color: transparent;
+	-fx-padding: 0 10 0 0;
+}
+.scroll-bar .increment-arrow, .scroll-bar .decrement-arrow{
+	-fx-shape:"";
+	-fx-padding:0;
+}
+
+.scroll-bar:vertical .thumb
+	{
+	-fx-background-color: rgb(255,255,255,1);
+	-fx-background-radius: 8em;
+	-fx-border-radius: 8em;
+	-fx-padding:0;
+}
+
+
 .month-label{
     -fx-font-family: "Roboto Light";
     -fx-font-style: normal;
