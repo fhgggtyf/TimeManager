@@ -71,8 +71,6 @@ public class MonthBlock extends Parent {
             }
         }
 
-
-
         Pane weekBar=new Pane();
         weekBar.setPrefSize(345,45);
         weekBar.setLayoutX(0);
@@ -140,7 +138,6 @@ public class MonthBlock extends Parent {
         BottomBarWithScroll botBar = new BottomBarWithScroll(month,day);
         botBar.setLayoutX(0);
         botBar.setLayoutY(528);
-
 
         backGround.getChildren().addAll(monthCa,weekBar,buttons,botBar);
         getChildren().addAll(backGround);

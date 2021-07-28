@@ -16,7 +16,8 @@ public class Main extends Application {
     public void start(Stage primaryStage){
         primaryStage.setTitle("Hello World");
         Pane background = new Pane();
-        background.getChildren().addAll(new GroupManagement());
+        background.getChildren().addAll(new EventManagement());
+//        background.getStylesheets().addAll("sample/MonthCalendarStyle.css");
         primaryStage.setScene(new Scene(background,375 , 667));
         primaryStage.show();
     }

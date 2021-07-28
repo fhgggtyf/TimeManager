@@ -32,8 +32,6 @@ public class EventManagement extends Parent {
         CircleButton folder = new CircleButton(new Image("img/folder.PNG"));
         Pane upSpace2 = new Pane();
         upSpace2.setPrefSize(161,97);
-
-        BooleanProperty trash = new SimpleBooleanProperty(true);
         CircleButton trashBin = new CircleButton(new Image("img/trashBin.PNG"));
 
         topMenu.getChildren().addAll(arrow,upSpace1,folder,upSpace2,trashBin);
@@ -45,9 +43,9 @@ public class EventManagement extends Parent {
         centerBack.getStyleClass().add("light-background");
         //这里之后要用eventList代替
         ArrayList<EventSquare> eventSquareArrayList = new ArrayList<EventSquare>();
-        EventSquare event1 = new EventSquare("TOK","03:40","06:40","note","blue",trash);
-        EventSquare event2 = new EventSquare("Econ","08:52","11:52","","blue",trash);
-        EventSquare event3 = new EventSquare("Do Chores","16:09","17:28","","yellow",trash);
+        EventSquare event1 = new EventSquare("TOK","03:40","06:40","note","blue");
+        EventSquare event2 = new EventSquare("Econ","08:52","11:52","","blue");
+        EventSquare event3 = new EventSquare("Do Chores","16:09","17:28","","yellow");
         eventSquareArrayList.add(event1);
         eventSquareArrayList.add(event2);
         eventSquareArrayList.add(event3);
@@ -58,29 +56,6 @@ public class EventManagement extends Parent {
         HBox centerAll = new HBox();
         centerAll.setAlignment(Pos.CENTER);
         centerAll.setPrefSize(375,433);
-
-        trash.addListener((obs,oldState,newState)->{
-            boolean isOn = newState;
-            if(isOn){
-                trashBin.setImage(new Image("img/confirm.PNG"));
-                centerBack.getChildren().clear();
-                for(int i = 0; i < eventSquareArrayList.size(); i++){
-                    eventSquareArrayList.get(i).setDesOrDel(true);
-                    centerBack.getChildren().add(eventSquareArrayList.get(i));
-                }
-            }
-            else{
-                trashBin.setImage(new Image("img/trashBin.PNG"));
-                centerBack.getChildren().clear();
-                for(int i = 0; i < eventSquareArrayList.size(); i++){
-                    eventSquareArrayList.get(i).setDesOrDel(false);
-                    centerBack.getChildren().add(eventSquareArrayList.get(i));
-                }
-            }
-        });
-        trashBin.setOnMouseClicked(e ->{
-            trash.set(!trash.get());
-        });
 
         centerAll.getChildren().add(centerBack);
 
@@ -108,16 +83,14 @@ public class EventManagement extends Parent {
         public String endTime;
         public String note;
         public String color;
-        public BooleanProperty desOrDel;
 
-        public EventSquare(String name, String startTime, String endTime, String note, String color, BooleanProperty desOrDel) {
+        public EventSquare(String name, String startTime, String endTime, String note, String color) {
             this.name = name;
             this.startTime = startTime;
             this.endTime = endTime;
             this.note = note;
             this.color = color;
-            this.desOrDel = desOrDel;
-            refreshDisplay();
+            Display();
         }
 
         public String getName() {
@@ -160,20 +133,7 @@ public class EventManagement extends Parent {
             this.color = color;
         }
 
-        public boolean isDesOrDel() {
-            return desOrDel.get();
-        }
-
-        public BooleanProperty desOrDelProperty() {
-            return desOrDel;
-        }
-
-        public void setDesOrDel(boolean desOrDel) {
-            this.desOrDel.set(desOrDel);
-            refreshDisplay();
-        }
-
-        public void refreshDisplay(){
+        public void Display(){
             Label eventName = new Label(name);
             eventName.getStyleClass().add("name-label");
             eventName.setPrefSize(120,20);
