@@ -1,8 +1,10 @@
 package sample;
 
 import javafx.application.Application;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 
 import java.io.File;
@@ -11,14 +13,20 @@ import java.io.OutputStream;
 import java.util.Calendar;
 
 public class Main extends Application {
+    private static Stage guiStage;
+
+    public static Stage getStage() {
+        return guiStage;
+    }
 
     @Override
     public void start(Stage primaryStage){
         primaryStage.setTitle("Hello World");
-        Pane background = new Pane();
-        background.getChildren().addAll(new EventManagement());
+        Parent root = new CreateEvent();
+        guiStage = primaryStage;
+        Scene scene = new Scene(root,375 , 667);
 //        background.getStylesheets().addAll("sample/MonthCalendarStyle.css");
-        primaryStage.setScene(new Scene(background,375 , 667));
+        primaryStage.setScene(scene);
         primaryStage.show();
     }
 

@@ -9,6 +9,7 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.stage.Stage;
 import javafx.util.*;
 
 import java.util.*;
@@ -46,9 +47,11 @@ public class CreateEvent extends Parent {
         saveButton.setLayoutX(100);
         saveButton.setLayoutY(53);
 
-        saveButton.setOnMouseClicked(e ->{
-            Event tempEvent = new Event(tempEventName,tempEventNote,tempEventStart,tempEventEnd,tempEventAlarm,tempEventGroup);
+        saveButton.setOnMouseClicked(event ->{
+//            Event tempEvent = new Event(tempEventName,tempEventNote,tempEventStart,tempEventEnd,tempEventAlarm,tempEventGroup);
             //day.addToEventList(tempEvent);
+            Scene newScene = new Scene(new DailyToDo(),375,667);// ... commands which define the new scene.
+            Main.getStage().setScene(newScene);
         });
 
         buttonFix.getChildren().addAll(backButton,saveButton);
@@ -68,7 +71,7 @@ public class CreateEvent extends Parent {
         Label nameLabel = new Label("Name");
         nameLabel.getStyleClass().add("instructor-label");
         TextField nameTextField = new TextField();
-        tempEventName=nameTextField.getText();
+//        tempEventName=nameTextField.getText();
         nameTextField.setLayoutX(66);
         nameTextField.setMinWidth(253);
         nameTextField.setPromptText("(5 words maximum)");
@@ -79,7 +82,7 @@ public class CreateEvent extends Parent {
         Label noteLabel = new Label("Note");
         noteLabel.getStyleClass().add("instructor-label");
         TextArea noteTextArea = new TextArea();
-        tempEventNote=noteTextArea.getText();
+//        tempEventNote=noteTextArea.getText();
         noteTextArea.setPrefRowCount(2);
         noteTextArea.setLayoutX(66); // 默认以下所有除label外第一个元素左端均为66
         noteTextArea.setPrefWidth(253);
