@@ -1,11 +1,10 @@
 package sample;
 
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -16,9 +15,8 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.concurrent.atomic.AtomicBoolean;
+
 
 public class EventManagement extends Parent {
     public EventManagement(){
@@ -37,10 +35,8 @@ public class EventManagement extends Parent {
         topMenu.getChildren().addAll(arrow,upSpace1,folder,upSpace2,trashBin);
 
         VBox centerBack = new VBox();
-        centerBack.setPrefSize(344,433);
-        centerBack.setPadding(new Insets(10));
+        centerBack.setPrefSize(314,403);
         centerBack.setSpacing(9);
-        centerBack.getStyleClass().add("light-background");
         //这里之后要用eventList代替
         ArrayList<EventSquare> eventSquareArrayList = new ArrayList<EventSquare>();
         EventSquare event1 = new EventSquare("TOK","03:40","06:40","note","blue");
@@ -52,12 +48,30 @@ public class EventManagement extends Parent {
         for(int i = 0; i < eventSquareArrayList.size(); i++){
             centerBack.getChildren().addAll(eventSquareArrayList.get(i));
         }
+        
+        ScrollPane centerBackWithScroll = new ScrollPane();
+        centerBackWithScroll.setContent(centerBack);
+        centerBackWithScroll.setPrefSize(314,403);
+        centerBackWithScroll.getStyleClass().addAll("scroll-null-background",
+                "scroll-bar:vertical ",
+                "scroll-bar:vertical .increment-button,  .scroll-bar:vertical .decrement-button",
+                "scroll-bar .increment-arrow, .scroll-bar .decrement-arrow",
+                "scroll-bar:vertical .thumb");
+        centerBackWithScroll.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
+        centerBackWithScroll.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+
+        VBox centerBackAdd = new VBox();
+        centerBackAdd.setPrefSize(344,433);
+        centerBackAdd.setPadding(new Insets(15));
+        centerBackAdd.getChildren().add(centerBackWithScroll);
+        centerBackAdd.getStyleClass().add("light-background");
 
         HBox centerAll = new HBox();
         centerAll.setAlignment(Pos.CENTER);
         centerAll.setPrefSize(375,433);
+        centerAll.getChildren().add(centerBackAdd);
 
-        centerAll.getChildren().add(centerBack);
+
 
         BottomBar bottomBar = new BottomBar("Feb","6",false);
         bottomBar.setLayoutY(18);
@@ -172,7 +186,7 @@ public class EventManagement extends Parent {
                 noteStatus = Boolean.FALSE;
             }
             Label description = new Label(note);
-            description.setPrefSize(150,50);
+            description.setPrefSize(120,50);
             if(noteStatus){
                 description.getStyleClass().add("descriptionActivated-label");
             }else{
@@ -180,7 +194,7 @@ public class EventManagement extends Parent {
             }
 
             Pane middleSpace = new Pane();
-            middleSpace.setPrefSize(111,35);
+            middleSpace.setPrefSize(76,35);
 
             Rectangle cancelImage = new Rectangle(20.42,20.42);
             cancelImage.setFill(new ImagePattern(new Image("img/cancel.PNG")));
@@ -190,14 +204,15 @@ public class EventManagement extends Parent {
             cancelButton.getChildren().add(cancelImage);
 
             HBox backSquareContainer = new HBox();
-            backSquareContainer.setPrefSize(306,50);
+            backSquareContainer.setPrefSize(265,50);
             backSquareContainer.setSpacing(12.5);
             backSquareContainer.setLayoutX(13);
             backSquareContainer.setLayoutY(7);
-            backSquareContainer.getChildren().addAll(eventSquareLeft,separationLine,description);
+            //backSquareContainer.getChildren().addAll(eventSquareLeft,separationLine,description);
+            backSquareContainer.getChildren().addAll(eventSquareLeft,separationLine,middleSpace,cancelButton);
 
 
-            Rectangle backSquareBackground = new Rectangle(325,63,Color.rgb(196,196,196,0.3));
+            Rectangle backSquareBackground = new Rectangle(290,63,Color.rgb(196,196,196,0.3));
             backSquareBackground.setArcWidth(10);
             backSquareBackground.setArcHeight(10);
 
