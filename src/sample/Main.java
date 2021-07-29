@@ -20,7 +20,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage){
         primaryStage.setTitle("Hello World");
-        Parent root = new GroupManagement2();
+        Parent root = new EventManagement1();
         guiStage = primaryStage;
         Scene scene = new Scene(root,375 , 667);
         primaryStage.setScene(scene);

@@ -26,6 +26,10 @@ public class GroupManagement1 extends Parent{
         topMenu.setAlignment(Pos.CENTER_LEFT);
         topMenu.setPadding(new Insets(28,23,23,15));
         CircleButton arrow = new CircleButton(new Image("img/arrow.PNG"));
+        arrow.setOnMouseClicked(e->{
+            Scene newScene = new Scene(new EventManagement1(),375,667);
+            Main.getStage().setScene(newScene);
+        });
         Pane upSpace1 = new Pane();
         upSpace1.setPrefSize(21,51);
         CircleButton spaceHolder = new CircleButton(new Image("img/folder.PNG"));

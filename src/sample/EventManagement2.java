@@ -3,6 +3,7 @@ package sample;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
@@ -18,21 +19,33 @@ import javafx.scene.text.Font;
 import java.util.ArrayList;
 
 
-public class EventManagement extends Parent {
-    public EventManagement(){
+public class EventManagement2 extends Parent {
+    public EventManagement2(){
         HBox topMenu = new HBox();
         topMenu.setPrefSize(375,97);
         topMenu.setAlignment(Pos.CENTER_LEFT);
         topMenu.setPadding(new Insets(28,23,23,15));
         CircleButton arrow = new CircleButton(new Image("img/arrow.PNG"));
+        arrow.setOnMouseClicked(e->{
+            Scene newScene = new Scene(new MonthBlock("Feb","6"),375,667);
+            Main.getStage().setScene(newScene);
+        });
         Pane upSpace1 = new Pane();
         upSpace1.setPrefSize(21,51);
         CircleButton folder = new CircleButton(new Image("img/folder.PNG"));
+        folder.setOnMouseClicked(e->{
+            Scene newScene = new Scene(new GroupManagement1(),375,667);
+            Main.getStage().setScene(newScene);
+        });
         Pane upSpace2 = new Pane();
         upSpace2.setPrefSize(161,97);
-        CircleButton trashBin = new CircleButton(new Image("img/trashBin.PNG"));
+        CircleButton confirm = new CircleButton(new Image("img/confirm.PNG"));
+        confirm.setOnMouseClicked(e->{
+            Scene newScene = new Scene(new EventManagement1(),375,667);
+            Main.getStage().setScene(newScene);
+        });
 
-        topMenu.getChildren().addAll(arrow,upSpace1,folder,upSpace2,trashBin);
+        topMenu.getChildren().addAll(arrow,upSpace1,folder,upSpace2,confirm);
 
         VBox centerBack = new VBox();
         centerBack.setPrefSize(314,403);
@@ -48,7 +61,7 @@ public class EventManagement extends Parent {
         for(int i = 0; i < eventSquareArrayList.size(); i++){
             centerBack.getChildren().addAll(eventSquareArrayList.get(i));
         }
-        
+
         ScrollPane centerBackWithScroll = new ScrollPane();
         centerBackWithScroll.setContent(centerBack);
         centerBackWithScroll.setPrefSize(314,403);
@@ -180,19 +193,6 @@ public class EventManagement extends Parent {
             Rectangle separationLine = new Rectangle(2,50);
             separationLine.setFill(Color.rgb(167,167,167,1));
 
-            Boolean noteStatus = Boolean.TRUE;
-            if(note.equals("")){
-                note = "No description";
-                noteStatus = Boolean.FALSE;
-            }
-            Label description = new Label(note);
-            description.setPrefSize(120,50);
-            if(noteStatus){
-                description.getStyleClass().add("descriptionActivated-label");
-            }else{
-                description.getStyleClass().add("descriptionNull-label");
-            }
-
             Pane middleSpace = new Pane();
             middleSpace.setPrefSize(76,35);
 
@@ -208,9 +208,7 @@ public class EventManagement extends Parent {
             backSquareContainer.setSpacing(12.5);
             backSquareContainer.setLayoutX(13);
             backSquareContainer.setLayoutY(7);
-            //backSquareContainer.getChildren().addAll(eventSquareLeft,separationLine,description);
             backSquareContainer.getChildren().addAll(eventSquareLeft,separationLine,middleSpace,cancelButton);
-
 
             Rectangle backSquareBackground = new Rectangle(290,63,Color.rgb(196,196,196,0.3));
             backSquareBackground.setArcWidth(10);
