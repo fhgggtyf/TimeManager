@@ -5,6 +5,7 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
@@ -18,8 +19,8 @@ import javafx.scene.text.Font;
 
 import java.util.ArrayList;
 
-public class GroupManagement extends Parent{
-    public GroupManagement(){
+public class GroupManagement2 extends Parent{
+    public GroupManagement2(){
         HBox topMenu = new HBox();
         topMenu.setPrefSize(375,97);
         topMenu.setAlignment(Pos.CENTER_LEFT);
@@ -32,10 +33,13 @@ public class GroupManagement extends Parent{
         Pane upSpace2 = new Pane();
         upSpace2.setPrefSize(161,97);
 
-        BooleanProperty trash = new SimpleBooleanProperty(true);
-        CircleButton trashBin = new CircleButton(new Image("img/trashBin.PNG"));
+        CircleButton confirm = new CircleButton(new Image("img/confirm.PNG"));
+        confirm.setOnMouseClicked(event -> {
+            Scene newScene = new Scene(new GroupManagement1(),375,667);// ... commands which define the new scene.
+            Main.getStage().setScene(newScene);
+        });
 
-        topMenu.getChildren().addAll(arrow,upSpace1,spaceHolder,upSpace2,trashBin);
+        topMenu.getChildren().addAll(arrow,upSpace1,spaceHolder,upSpace2,confirm);
 
         VBox centerBack = new VBox();
         centerBack.setPrefSize(344,543);
@@ -57,10 +61,6 @@ public class GroupManagement extends Parent{
         HBox centerAll = new HBox();
         centerAll.setAlignment(Pos.CENTER);
         centerAll.setPrefSize(375,543);
-
-        trashBin.setOnMouseClicked(e ->{
-            trash.set(!trash.get());
-        });
 
         centerAll.getChildren().add(centerBack);
 
@@ -112,6 +112,12 @@ public class GroupManagement extends Parent{
             tag.getStyleClass().addAll("tag-label");
             tag.setLayoutY(8);
             tag.setLayoutX(19);
+
+            Label description = new Label("Description");
+            description.setLayoutX(77);
+            description.setLayoutY(16);
+            description.getStyleClass().add("description");
+
             Rectangle tagRectangle = new Rectangle(63,63);
             tagRectangle.setArcHeight(10);
             tagRectangle.setArcWidth(10);
@@ -121,9 +127,18 @@ public class GroupManagement extends Parent{
                 tagRectangle.setFill(Color.rgb(243,164,25,0.5));
             }
 
+            Rectangle cancelImage = new Rectangle(20.42,20.42);
+            cancelImage.setFill(new ImagePattern(new Image("img/cancel.PNG")));
+            HBox cancelButton = new HBox();
+            cancelButton.setPrefSize(35,35);
+            cancelButton.setAlignment(Pos.CENTER);
+            cancelButton.getChildren().add(cancelImage);
+            cancelButton.setLayoutX(284);
+            cancelButton.setLayoutY(14);
+
             Pane back = new Pane();
             back.setPrefSize(325,63);
-            back.getChildren().addAll(groupRectangle,tagRectangle,tag);
+            back.getChildren().addAll(groupRectangle,tagRectangle,tag,description,cancelButton);
 
             getChildren().addAll(back);
         }

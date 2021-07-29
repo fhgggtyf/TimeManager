@@ -3,8 +3,6 @@ package sample;
 import javafx.application.Application;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.layout.Pane;
-import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 
 import java.io.File;
@@ -22,10 +20,9 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage){
         primaryStage.setTitle("Hello World");
-        Parent root = new CreateEvent();
+        Parent root = new GroupManagement2();
         guiStage = primaryStage;
         Scene scene = new Scene(root,375 , 667);
-//        background.getStylesheets().addAll("sample/MonthCalendarStyle.css");
         primaryStage.setScene(scene);
         primaryStage.show();
     }

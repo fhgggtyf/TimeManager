@@ -47,8 +47,13 @@ public class CreateEvent extends Parent {
         saveButton.setLayoutX(100);
         saveButton.setLayoutY(53);
 
+        backButton.setOnMouseClicked(event -> {
+            Scene newScene = new Scene(new DailyToDo(),375,667);// ... commands which define the new scene.
+            Main.getStage().setScene(newScene);
+        });
+
         saveButton.setOnMouseClicked(event ->{
-//            Event tempEvent = new Event(tempEventName,tempEventNote,tempEventStart,tempEventEnd,tempEventAlarm,tempEventGroup);
+            //Event tempEvent = new Event(tempEventName,tempEventNote,tempEventStart,tempEventEnd,tempEventAlarm,tempEventGroup);
             //day.addToEventList(tempEvent);
             Scene newScene = new Scene(new DailyToDo(),375,667);// ... commands which define the new scene.
             Main.getStage().setScene(newScene);
