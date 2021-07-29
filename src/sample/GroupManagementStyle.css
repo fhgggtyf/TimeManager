@@ -38,6 +38,15 @@
     -fx-alignment: top_left;
 }
 
+.description{
+    -fx-font-family: "Roboto Light";
+    -fx-font-style: normal;
+    -fx-font-weight: 700;
+    -fx-font-size: 22;
+    -fx-text-fill: WHITE;
+    -fx-display: flex;
+}
+
 .tag-label{
     -fx-font-family: "Roboto Light";
     -fx-font-style: normal;
