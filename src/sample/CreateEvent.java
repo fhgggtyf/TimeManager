@@ -33,7 +33,7 @@ public class CreateEvent extends Parent {
     }
 
     // 俩圆形按钮
-    private Parent top(){
+    private Parent top(boolean dailyOrEvent){
         HBox root = new HBox();
         root.setPrefSize(375,105);
 
@@ -48,8 +48,14 @@ public class CreateEvent extends Parent {
         saveButton.setLayoutY(53);
 
         backButton.setOnMouseClicked(event -> {
-            Scene newScene = new Scene(new DailyToDo(),375,667);// ... commands which define the new scene.
-            Main.getStage().setScene(newScene);
+            if(dailyOrEvent){
+                Scene newScene = new Scene(new EventManagement1(),375,667);// ... commands which define the new scene.
+                Main.getStage().setScene(newScene);
+            }
+            else{
+                Scene newScene = new Scene(new DailyToDo(),375,667);// ... commands which define the new scene.
+                Main.getStage().setScene(newScene);
+            }
         });
 
         saveButton.setOnMouseClicked(event ->{
@@ -191,14 +197,14 @@ public class CreateEvent extends Parent {
         return root;
     }
 
-    public CreateEvent(){
+    public CreateEvent(boolean dailyOrEvent){
 
         // Show scene
         VBox back = new VBox();
         back.setPrefSize(375,667);
 
         javafx.scene.text.Font.getFamilies();
-        back.getChildren().addAll(top(),mid1(),spacing(38),mid2(),spacing(38),bot());
+        back.getChildren().addAll(top(dailyOrEvent),mid1(),spacing(38),mid2(),spacing(38),bot());
         back.getStylesheets().add("sample/CreateEventStyle.css");
         back.getStyleClass().addAll("background");
         getChildren().addAll(back);

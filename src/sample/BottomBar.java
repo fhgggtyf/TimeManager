@@ -46,7 +46,7 @@ public class BottomBar extends Parent {
         addButton.setLayoutY(50);
 
         addButton.setOnMouseClicked(event -> {
-            Scene newScene = new Scene(new CreateEvent(),375,667);// ... commands which define the new scene.
+            Scene newScene = new Scene(new CreateEvent(true),375,667);// ... commands which define the new scene.
             Main.getStage().setScene(newScene);
         });
 
@@ -61,7 +61,6 @@ public class BottomBar extends Parent {
             newScene.getStylesheets().addAll("sample/MonthCalendarStyle.css");
             Main.getStage().setScene(newScene);
         });
-
 
         LeftRightButton leftRightButton = new LeftRightButton();
         leftRightButton.setLayoutX(102);

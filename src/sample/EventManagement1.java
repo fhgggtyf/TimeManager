@@ -84,8 +84,6 @@ public class EventManagement1 extends Parent {
         centerAll.setPrefSize(375,433);
         centerAll.getChildren().add(centerBackAdd);
 
-
-
         BottomBar bottomBar = new BottomBar("Feb","6",false);
         bottomBar.setLayoutY(18);
         Pane bottomAll = new Pane();
