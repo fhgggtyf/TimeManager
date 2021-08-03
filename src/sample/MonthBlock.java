@@ -3,7 +3,9 @@ package sample;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -11,23 +13,6 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 
 public class MonthBlock extends Parent {
-
-    public static Parent calendar(String month, String day){
-        HBox root=new HBox();
-        root.setPrefSize(375,548);
-
-        Pane backBoard = new Pane();
-        backBoard.setPrefSize(344,371);
-        MonthBlock monthSquare = new MonthBlock(month, day);
-        monthSquare.setLayoutX(1);
-        monthSquare.setLayoutY(2);
-
-        backBoard.getChildren().addAll(monthSquare);
-        HBox.setMargin(backBoard,new Insets(15,15,28,15));
-
-        root.getChildren().addAll(backBoard);
-        return root;
-    }
 
     public MonthBlock(String month, String day){
 
@@ -42,6 +27,10 @@ public class MonthBlock extends Parent {
                 Pane block=new Pane();
                 block.setPrefSize(44,69);
                 Rectangle block1=new Rectangle(44,69);
+                block.setOnMouseClicked(e->{
+                        Scene newScene = new Scene(new DailyToDo(),375,667);
+                        Main.getStage().setScene(newScene);
+                });
                 block1.setFill(Color.rgb(165,165,165,0.3));
                 block1.setLayoutX(50*i);
                 block1.setLayoutY(126+75*j);
@@ -70,6 +59,8 @@ public class MonthBlock extends Parent {
                 monthCa.getChildren().addAll(block);
             }
         }
+
+
 
         Pane weekBar=new Pane();
         weekBar.setPrefSize(345,45);
@@ -124,13 +115,18 @@ public class MonthBlock extends Parent {
 
         Pane buttons=new Pane();
         buttons.setPrefSize(123,50);
-        Circle add=new Circle(25);
-        Circle list=new Circle(25);
-        add.setFill(Color.rgb(165,165,165,0.3));
-        //add.setFill(new ImagePattern(new Image("src/add.png")));
+        CircleButton add = new CircleButton(new Image("img/add.PNG"));
+        add.setOnMouseClicked(e->{
+            Scene newScene = new Scene(new CreateEvent(true),375,667);
+            Main.getStage().setScene(newScene);
+        });
+        CircleButton list = new CircleButton(new Image("img/list.PNG"));
+        list.setOnMouseClicked(e->{
+            Scene newScene = new Scene(new EventManagement1(),375,667);
+            Main.getStage().setScene(newScene);
+        });
         add.setLayoutX(25);
         add.setLayoutY(25);
-        list.setFill(Color.rgb(165,165,165,0.3));
         list.setLayoutX(97);
         list.setLayoutY(25);
         buttons.getChildren().addAll(add,list);
@@ -139,7 +135,27 @@ public class MonthBlock extends Parent {
         botBar.setLayoutX(0);
         botBar.setLayoutY(528);
 
+
         backGround.getChildren().addAll(monthCa,weekBar,buttons,botBar);
-        getChildren().addAll(backGround);
+
+
+
+        HBox root=new HBox();
+        root.setPrefSize(375,667);
+
+
+        Pane backBoard = new Pane();
+        backBoard.setPrefSize(344,371);
+        backGround.setLayoutX(1);
+        backGround.setLayoutY(2);
+
+        backBoard.getChildren().addAll(backGround);
+        HBox.setMargin(backBoard,new Insets(15,15,28,15));
+
+        root.getChildren().addAll(backBoard);
+        root.getStylesheets().add("sample/MonthCalendarStyle.css");
+        root.getStyleClass().addAll("light-background");
+
+        getChildren().addAll(root);
     }
 }
