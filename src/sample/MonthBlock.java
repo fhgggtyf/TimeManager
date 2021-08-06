@@ -125,11 +125,18 @@ public class MonthBlock extends Parent {
             Scene newScene = new Scene(new EventManagement1(),375,667);
             Main.getStage().setScene(newScene);
         });
+        CircleButton addGroup = new CircleButton(new Image("img/add_group.PNG"));
+        addGroup.setOnMouseClicked(e->{
+            Scene newScene = new Scene(new CreateGroup(),375,667);
+            Main.getStage().setScene(newScene);
+        });
         add.setLayoutX(25);
         add.setLayoutY(25);
-        list.setLayoutX(97);
+        addGroup.setLayoutX(97);
+        addGroup.setLayoutY(25);
+        list.setLayoutX(169);
         list.setLayoutY(25);
-        buttons.getChildren().addAll(add,list);
+        buttons.getChildren().addAll(add,addGroup,list);
 
         BottomBarWithScroll botBar = new BottomBarWithScroll(month,day);
         botBar.setLayoutX(0);
