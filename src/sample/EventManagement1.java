@@ -25,21 +25,21 @@ public class EventManagement1 extends Parent {
         topMenu.setPrefSize(375,97);
         topMenu.setAlignment(Pos.CENTER_LEFT);
         topMenu.setPadding(new Insets(28,23,23,15));
-        CircleButton arrow = new CircleButton(new Image("img/arrow.PNG"));
+        CircleButton arrow = new CircleButton(new Image("img/arrow.png"));
         arrow.setOnMouseClicked(e->{
             Scene newScene = new Scene(new MonthBlock("Feb","6"),375,667);
             Main.getStage().setScene(newScene);
         });
         Pane upSpace1 = new Pane();
         upSpace1.setPrefSize(21,51);
-        CircleButton folder = new CircleButton(new Image("img/folder.PNG"));
+        CircleButton folder = new CircleButton(new Image("img/folder.png"));
         folder.setOnMouseClicked(e->{
             Scene newScene = new Scene(new GroupManagement1(),375,667);
             Main.getStage().setScene(newScene);
         });
         Pane upSpace2 = new Pane();
         upSpace2.setPrefSize(161,97);
-        CircleButton trashBin = new CircleButton(new Image("img/trashBin.PNG"));
+        CircleButton trashBin = new CircleButton(new Image("img/trashBin.png"));
         trashBin.setOnMouseClicked(e->{
             Scene newScene = new Scene(new EventManagement2(),375,667);
             Main.getStage().setScene(newScene);
@@ -184,8 +184,8 @@ public class EventManagement1 extends Parent {
             eventTimeBack.getChildren().add(eventTime);
 
             VBox eventSquareLeft = new VBox();
+            eventSquareLeft.setPadding(new Insets(5,0,0,0));
             eventSquareLeft.setSpacing(9);
-            eventSquareLeft.setAlignment(Pos.CENTER);
             eventSquareLeft.getChildren().addAll(eventNameBack,eventTimeBack);
 
             Rectangle separationLine = new Rectangle(2,50);

@@ -51,13 +51,20 @@ public class BottomBar extends Parent {
         });
 
         CircleButton backButton = new CircleButton(new Image("img/BackButton.png"));
+        CircleButton add_groupButton = new CircleButton(new Image("img/add_group.png"));
         backButton.setLayoutX(301);
         backButton.setLayoutY(50);
-        backButton.setManaged(visibility);
-        backButton.setVisible(visibility);
+        add_groupButton.setLayoutX(301);
+        add_groupButton.setLayoutY(50);
 
         backButton.setOnMouseClicked(event -> {
             Scene newScene = new Scene(new MonthBlock("July","29"),375,667);// ... commands which define the new scene.
+            newScene.getStylesheets().addAll("sample/MonthCalendarStyle.css");
+            Main.getStage().setScene(newScene);
+        });
+
+        add_groupButton.setOnMouseClicked(e->{
+            Scene newScene = new Scene(new CreateGroup(),375,667);// ... commands which define the new scene.
             newScene.getStylesheets().addAll("sample/MonthCalendarStyle.css");
             Main.getStage().setScene(newScene);
         });
@@ -66,7 +73,11 @@ public class BottomBar extends Parent {
         leftRightButton.setLayoutX(102);
         leftRightButton.setLayoutY(25);
 
-        lightPanel.getChildren().addAll(dayLabel,monthLabel,separationLine,leftRightButton,addButton,backButton);
+        if(visibility){
+            lightPanel.getChildren().addAll(dayLabel,monthLabel,separationLine,leftRightButton,addButton,backButton);
+        }else{
+            lightPanel.getChildren().addAll(dayLabel,monthLabel,separationLine,leftRightButton,addButton,add_groupButton);
+        }
 
         botBarBack.getStylesheets().addAll("sample/BottomBarStyle.css");
         botBarBack.getChildren().addAll(lightPanel);

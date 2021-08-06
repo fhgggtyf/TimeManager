@@ -18,8 +18,8 @@ public class CreateGroup extends Parent{
     Paint colorSelected;
 
     public CreateGroup(){
-        CircleButton arrow = new CircleButton(new Image("img/arrow.PNG"));
-        CircleButton confirm = new CircleButton(new Image("img/confirm.PNG"));
+        CircleButton arrow = new CircleButton(new Image("img/arrow.png"));
+        CircleButton confirm = new CircleButton(new Image("img/confirm.png"));
         confirm.setOnMouseClicked(e->{
             Group group = new Group(tempName,colorSelected);
         });

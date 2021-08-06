@@ -25,21 +25,21 @@ public class EventManagement2 extends Parent {
         topMenu.setPrefSize(375,97);
         topMenu.setAlignment(Pos.CENTER_LEFT);
         topMenu.setPadding(new Insets(28,23,23,15));
-        CircleButton arrow = new CircleButton(new Image("img/arrow.PNG"));
+        CircleButton arrow = new CircleButton(new Image("img/arrow.png"));
         arrow.setOnMouseClicked(e->{
             Scene newScene = new Scene(new MonthBlock("Feb","6"),375,667);
             Main.getStage().setScene(newScene);
         });
         Pane upSpace1 = new Pane();
         upSpace1.setPrefSize(21,51);
-        CircleButton folder = new CircleButton(new Image("img/folder.PNG"));
+        CircleButton folder = new CircleButton(new Image("img/folder.png"));
         folder.setOnMouseClicked(e->{
             Scene newScene = new Scene(new GroupManagement1(),375,667);
             Main.getStage().setScene(newScene);
         });
         Pane upSpace2 = new Pane();
         upSpace2.setPrefSize(161,97);
-        CircleButton confirm = new CircleButton(new Image("img/confirm.PNG"));
+        CircleButton confirm = new CircleButton(new Image("img/confirm.png"));
         confirm.setOnMouseClicked(e->{
             Scene newScene = new Scene(new EventManagement1(),375,667);
             Main.getStage().setScene(newScene);
@@ -186,29 +186,29 @@ public class EventManagement2 extends Parent {
             eventTimeBack.getChildren().add(eventTime);
 
             VBox eventSquareLeft = new VBox();
+            eventSquareLeft.setPadding(new Insets(5,0,0,0));
             eventSquareLeft.setSpacing(9);
-            eventSquareLeft.setAlignment(Pos.CENTER);
             eventSquareLeft.getChildren().addAll(eventNameBack,eventTimeBack);
 
             Rectangle separationLine = new Rectangle(2,50);
             separationLine.setFill(Color.rgb(167,167,167,1));
 
             Pane middleSpace = new Pane();
-            middleSpace.setPrefSize(76,35);
+            middleSpace.setPrefSize(72.5,35);
 
-            Rectangle cancelImage = new Rectangle(20.42,20.42);
-            cancelImage.setFill(new ImagePattern(new Image("img/cancel.PNG")));
-            HBox cancelButton = new HBox();
-            cancelButton.setPrefSize(35,35);
-            cancelButton.setAlignment(Pos.CENTER);
-            cancelButton.getChildren().add(cancelImage);
+            Rectangle cancelButton = new Rectangle(35,35);
+            cancelButton.setFill(new ImagePattern(new Image("img/cancel.png")));
+            HBox cancelArea = new HBox();
+            cancelArea.setPrefSize(35,50);
+            cancelArea.setPadding(new Insets(7.5,0,7.5,0));
+            cancelArea.getChildren().add(cancelButton);
 
             HBox backSquareContainer = new HBox();
             backSquareContainer.setPrefSize(265,50);
             backSquareContainer.setSpacing(12.5);
             backSquareContainer.setLayoutX(13);
             backSquareContainer.setLayoutY(7);
-            backSquareContainer.getChildren().addAll(eventSquareLeft,separationLine,middleSpace,cancelButton);
+            backSquareContainer.getChildren().addAll(eventSquareLeft,separationLine,middleSpace,cancelArea);
 
             Rectangle backSquareBackground = new Rectangle(290,63,Color.rgb(196,196,196,0.3));
             backSquareBackground.setArcWidth(10);
