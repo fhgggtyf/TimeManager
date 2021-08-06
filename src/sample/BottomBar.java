@@ -64,7 +64,7 @@ public class BottomBar extends Parent {
         });
 
         add_groupButton.setOnMouseClicked(e->{
-            Scene newScene = new Scene(new CreateGroup(),375,667);// ... commands which define the new scene.
+            Scene newScene = new Scene(new CreateGroup(true),375,667);// ... commands which define the new scene.
             newScene.getStylesheets().addAll("sample/MonthCalendarStyle.css");
             Main.getStage().setScene(newScene);
         });

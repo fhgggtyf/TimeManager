@@ -2,6 +2,7 @@ package sample;
 
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.TextFormatter;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
@@ -17,12 +18,31 @@ public class CreateGroup extends Parent{
     String tempName;
     Paint colorSelected;
 
-    public CreateGroup(){
+    public CreateGroup(Boolean calendarOrEvent){
         CircleButton arrow = new CircleButton(new Image("img/arrow.png"));
         CircleButton confirm = new CircleButton(new Image("img/confirm.png"));
-        confirm.setOnMouseClicked(e->{
-            Group group = new Group(tempName,colorSelected);
-        });
+        if(calendarOrEvent){
+            arrow.setOnMouseClicked(e->{
+                Scene newScene = new Scene(new EventManagement1(),375,667);
+                Main.getStage().setScene(newScene);
+            });
+            confirm.setOnMouseClicked(e->{
+                Scene newScene = new Scene(new EventManagement1(),375,667);
+                Main.getStage().setScene(newScene);
+                Group group = new Group(tempName,colorSelected);
+            });
+        }else{
+            arrow.setOnMouseClicked(e->{
+                Scene newScene = new Scene(new MonthBlock("Feb","6"),375,667);
+                Main.getStage().setScene(newScene);
+            });
+            confirm.setOnMouseClicked(e->{
+                Scene newScene = new Scene(new MonthBlock("Feb","6"),375,667);
+                Main.getStage().setScene(newScene);
+                Group group = new Group(tempName,colorSelected);
+            });
+        }
+
 
         HBox topAll = new HBox();
         topAll.setPrefSize(375,105);

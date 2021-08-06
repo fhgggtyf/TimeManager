@@ -127,7 +127,7 @@ public class MonthBlock extends Parent {
         });
         CircleButton addGroup = new CircleButton(new Image("img/add_group.PNG"));
         addGroup.setOnMouseClicked(e->{
-            Scene newScene = new Scene(new CreateGroup(),375,667);
+            Scene newScene = new Scene(new CreateGroup(false),375,667);
             Main.getStage().setScene(newScene);
         });
         add.setLayoutX(25);
