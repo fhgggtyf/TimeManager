@@ -25,19 +25,19 @@ public class GroupManagement1 extends Parent{
         topMenu.setPrefSize(375,97);
         topMenu.setAlignment(Pos.CENTER_LEFT);
         topMenu.setPadding(new Insets(28,23,23,15));
-        CircleButton arrow = new CircleButton(new Image("img/arrow.PNG"));
+        CircleButton arrow = new CircleButton(new Image("img/arrow.png"));
         arrow.setOnMouseClicked(e->{
             Scene newScene = new Scene(new EventManagement1(),375,667);
             Main.getStage().setScene(newScene);
         });
         Pane upSpace1 = new Pane();
         upSpace1.setPrefSize(21,51);
-        CircleButton spaceHolder = new CircleButton(new Image("img/folder.PNG"));
+        CircleButton spaceHolder = new CircleButton(new Image("img/folder.png"));
         spaceHolder.setVisible(false);
         Pane upSpace2 = new Pane();
         upSpace2.setPrefSize(161,97);
 
-        CircleButton trashBin = new CircleButton(new Image("img/trashBin.PNG"));
+        CircleButton trashBin = new CircleButton(new Image("img/trashBin.png"));
         trashBin.setOnMouseClicked(event -> {
             Scene newScene = new Scene(new GroupManagement2(),375,667);// ... commands which define the new scene.
             Main.getStage().setScene(newScene);

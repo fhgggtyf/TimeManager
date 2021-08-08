@@ -25,19 +25,19 @@ public class GroupManagement2 extends Parent{
         topMenu.setPrefSize(375,97);
         topMenu.setAlignment(Pos.CENTER_LEFT);
         topMenu.setPadding(new Insets(28,23,23,15));
-        CircleButton arrow = new CircleButton(new Image("img/arrow.PNG"));
+        CircleButton arrow = new CircleButton(new Image("img/arrow.png"));
         arrow.setOnMouseClicked(e->{
             Scene newScene = new Scene(new EventManagement1(),375,667);
             Main.getStage().setScene(newScene);
         });
         Pane upSpace1 = new Pane();
         upSpace1.setPrefSize(21,51);
-        CircleButton spaceHolder = new CircleButton(new Image("img/folder.PNG"));
+        CircleButton spaceHolder = new CircleButton(new Image("img/folder.png"));
         spaceHolder.setVisible(false);
         Pane upSpace2 = new Pane();
         upSpace2.setPrefSize(161,97);
 
-        CircleButton confirm = new CircleButton(new Image("img/confirm.PNG"));
+        CircleButton confirm = new CircleButton(new Image("img/confirm.png"));
         confirm.setOnMouseClicked(event -> {
             Scene newScene = new Scene(new GroupManagement1(),375,667);// ... commands which define the new scene.
             Main.getStage().setScene(newScene);
@@ -131,8 +131,8 @@ public class GroupManagement2 extends Parent{
                 tagRectangle.setFill(Color.rgb(243,164,25,0.5));
             }
 
-            Rectangle cancelImage = new Rectangle(20.42,20.42);
-            cancelImage.setFill(new ImagePattern(new Image("img/cancel.PNG")));
+            Rectangle cancelImage = new Rectangle(35,35);
+            cancelImage.setFill(new ImagePattern(new Image("img/cancel.png")));
             HBox cancelButton = new HBox();
             cancelButton.setPrefSize(35,35);
             cancelButton.setAlignment(Pos.CENTER);
