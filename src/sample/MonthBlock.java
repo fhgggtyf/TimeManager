@@ -117,7 +117,7 @@ public class MonthBlock extends Parent {
         buttons.setPrefSize(123,50);
         CircleButton add = new CircleButton(new Image("img/add.PNG"));
         add.setOnMouseClicked(e->{
-            Scene newScene = new Scene(new CreateEvent(true),375,667);
+            Scene newScene = new Scene(new CreateEvent(3),375,667);
             Main.getStage().setScene(newScene);
         });
         CircleButton list = new CircleButton(new Image("img/list.PNG"));

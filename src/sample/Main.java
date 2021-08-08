@@ -20,7 +20,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage){
         primaryStage.setTitle("Hello World");
-        Parent root = new EventManagement1();
+        Parent root = new MonthBlock("June","23");
         guiStage = primaryStage;
         Scene scene = new Scene(root,375 , 667);
         primaryStage.setScene(scene);
@@ -39,7 +39,7 @@ public class Main extends Application {
         initDay.set(2021, 6, 1, 0, 0, 0);
         for (int i = 0; i < 3652; i++) {
             initDay.add(Calendar.DATE, 1);
-            String msg = "date: " + initDay + ";\teventList: \n\n";
+            String msg = "date: " + initDay + " eventList: \n\n";
             byte data[] = msg.getBytes();
             output.write(data);
         }
