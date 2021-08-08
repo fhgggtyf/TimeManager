@@ -62,5 +62,5 @@
 }
 
 .dark-background{
-    -fx-background-color: rgba(115,115,115,1);
+    -fx-background-color: rgba(0, 0, 0, 0.5);
 }
