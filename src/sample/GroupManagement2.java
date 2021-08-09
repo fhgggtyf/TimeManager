@@ -44,9 +44,10 @@ public class GroupManagement2 extends Parent{
             Scene newScene = null;// ... commands which define the new scene.
             try {
                 newScene = new Scene(new GroupManagement1(),375,667);
-            } catch (IOException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
+
             Main.getStage().setScene(newScene);
         });
 
