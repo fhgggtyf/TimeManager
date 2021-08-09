@@ -7,6 +7,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -45,11 +46,12 @@ public class GroupManagement1 extends Parent{
 
         topMenu.getChildren().addAll(arrow,upSpace1,spaceHolder,upSpace2,trashBin);
 
+
+
         VBox centerBack = new VBox();
-        centerBack.setPrefSize(344,543);
-        centerBack.setPadding(new Insets(10));
+        centerBack.setPrefSize(314,513);
+        centerBack.setPadding(new Insets(0,20,0,0));
         centerBack.setSpacing(9);
-        centerBack.getStyleClass().add("light-background");
         //这里之后要用eventList代替
         ArrayList<GroupSquare> groupSquareArrayList = new ArrayList<GroupSquare>();
         GroupSquare group1 = new GroupSquare("A","blue");
@@ -62,11 +64,27 @@ public class GroupManagement1 extends Parent{
             centerBack.getChildren().addAll(groupSquareArrayList.get(i));
         }
 
+        ScrollPane centerBackWithScroll = new ScrollPane();
+        centerBackWithScroll.setContent(centerBack);
+        centerBackWithScroll.setPrefSize(314,513);
+        centerBackWithScroll.getStyleClass().addAll("scroll-null-background",
+                "scroll-bar:vertical ",
+                "scroll-bar:vertical .increment-button,  .scroll-bar:vertical .decrement-button",
+                "scroll-bar .increment-arrow, .scroll-bar .decrement-arrow",
+                "scroll-bar:vertical .thumb");
+        centerBackWithScroll.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
+        centerBackWithScroll.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+
+        VBox centerBackAdd = new VBox();
+        centerBackAdd.setPrefSize(344,543);
+        centerBackAdd.setPadding(new Insets(14,15,14,15));
+        centerBackAdd.getStyleClass().add("light-background");
+        centerBackAdd.getChildren().add(centerBackWithScroll);
+
         HBox centerAll = new HBox();
         centerAll.setAlignment(Pos.CENTER);
         centerAll.setPrefSize(375,543);
-
-        centerAll.getChildren().add(centerBack);
+        centerAll.getChildren().add(centerBackAdd);
 
         Pane placeholder = new Pane();
         placeholder.setPrefSize(375,27);
@@ -103,7 +121,7 @@ public class GroupManagement1 extends Parent{
         }
 
         public void refreshDisplay(){
-            Rectangle groupRectangle = new Rectangle(325,63);
+            Rectangle groupRectangle = new Rectangle(294,63);
             groupRectangle.setArcHeight(10);
             groupRectangle.setArcWidth(10);
             if(color.equals("blue")) {
@@ -132,7 +150,7 @@ public class GroupManagement1 extends Parent{
             }
 
             Pane back = new Pane();
-            back.setPrefSize(325,63);
+            back.setPrefSize(294,63);
             back.getChildren().addAll(groupRectangle,tagRectangle,tag,description);
 
             getChildren().addAll(back);
