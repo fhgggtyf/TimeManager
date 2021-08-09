@@ -51,10 +51,10 @@ public class GroupManagement2 extends Parent{
         centerBack.setPadding(new Insets(0,20,0,0));
         centerBack.setSpacing(9);
         //这里之后要用eventList代替
-        ArrayList<GroupManagement2.GroupSquare> groupSquareArrayList = new ArrayList<GroupManagement2.GroupSquare>();
-        GroupManagement2.GroupSquare group1 = new GroupManagement2.GroupSquare("A","blue");
-        GroupManagement2.GroupSquare group2 = new GroupManagement2.GroupSquare("A","blue");
-        GroupManagement2.GroupSquare group3 = new GroupManagement2.GroupSquare("B","yellow");
+        ArrayList<GroupSquare> groupSquareArrayList = new ArrayList<GroupSquare>();
+        GroupSquare group1 = new GroupSquare("A","blue");
+        GroupSquare group2 = new GroupSquare("A","blue");
+        GroupSquare group3 = new GroupSquare("B","yellow");
         groupSquareArrayList.add(group1);
         groupSquareArrayList.add(group2);
         groupSquareArrayList.add(group3);
