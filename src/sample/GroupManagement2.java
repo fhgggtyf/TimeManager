@@ -68,7 +68,7 @@ public class GroupManagement2 extends Parent{
         while((lineTxt = bufferedReader.readLine()) != null){
             String str=lineTxt+"\r\n";
             String[] dictionary =  str.split(" ");
-            GroupManagement2.GroupSquare group = new GroupManagement2.GroupSquare(String.valueOf((char)(97+counter)),dictionary[1],dictionary[0]);
+            GroupManagement2.GroupSquare group = new GroupManagement2.GroupSquare(String.valueOf((char)(97+counter)),dictionary[1].substring(0,8),dictionary[0]);
             groupSquareArrayList.add(group);
             counter++;
         }
@@ -139,11 +139,7 @@ public class GroupManagement2 extends Parent{
             Rectangle groupRectangle = new Rectangle(294,63);
             groupRectangle.setArcHeight(10);
             groupRectangle.setArcWidth(10);
-            if(color.equals("blue")) {
-                groupRectangle.setFill(Color.rgb(94, 137, 162, 0.3));
-            }else if(color.equals("yellow")){
-                groupRectangle.setFill(Color.rgb(243,164,25,0.3));
-            }
+            groupRectangle.setFill(Color.web(color,0.3));
 
             Label tag = new Label(this.tag);
             tag.getStyleClass().addAll("tag-label");
@@ -158,11 +154,7 @@ public class GroupManagement2 extends Parent{
             Rectangle tagRectangle = new Rectangle(63,63);
             tagRectangle.setArcHeight(10);
             tagRectangle.setArcWidth(10);
-            if(color.equals("blue")) {
-                tagRectangle.setFill(Color.rgb(94, 137, 162, 0.5));
-            }else if(color.equals("yellow")){
-                tagRectangle.setFill(Color.rgb(243,164,25,0.5));
-            }
+            tagRectangle.setFill(Color.web(color,0.5));
 
             Rectangle cancelImage = new Rectangle(35,35);
             cancelImage.setFill(new ImagePattern(new Image("img/cancel.png")));
