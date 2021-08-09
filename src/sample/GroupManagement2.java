@@ -18,10 +18,11 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 
+import java.io.*;
 import java.util.ArrayList;
 
 public class GroupManagement2 extends Parent{
-    public GroupManagement2(){
+    public GroupManagement2() throws IOException {
         HBox topMenu = new HBox();
         topMenu.setPrefSize(375,97);
         topMenu.setAlignment(Pos.CENTER_LEFT);
@@ -40,7 +41,12 @@ public class GroupManagement2 extends Parent{
 
         CircleButton confirm = new CircleButton(new Image("img/confirm.png"));
         confirm.setOnMouseClicked(event -> {
-            Scene newScene = new Scene(new GroupManagement1(),375,667);// ... commands which define the new scene.
+            Scene newScene = null;// ... commands which define the new scene.
+            try {
+                newScene = new Scene(new GroupManagement1(),375,667);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             Main.getStage().setScene(newScene);
         });
 
@@ -52,12 +58,21 @@ public class GroupManagement2 extends Parent{
         centerBack.setSpacing(9);
         //这里之后要用eventList代替
         ArrayList<GroupSquare> groupSquareArrayList = new ArrayList<GroupSquare>();
-        GroupSquare group1 = new GroupSquare("A","blue");
-        GroupSquare group2 = new GroupSquare("A","blue");
-        GroupSquare group3 = new GroupSquare("B","yellow");
-        groupSquareArrayList.add(group1);
-        groupSquareArrayList.add(group2);
-        groupSquareArrayList.add(group3);
+
+        File file = new File(".\\out\\data\\GroupData.txt");
+        InputStreamReader read = new InputStreamReader(
+                new FileInputStream(file));//考虑到编码格式
+        BufferedReader bufferedReader = new BufferedReader(read);
+        String lineTxt = null;
+        int counter = 0;
+        while((lineTxt = bufferedReader.readLine()) != null){
+            String str=lineTxt+"\r\n";
+            String[] dictionary =  str.split(" ");
+            GroupManagement2.GroupSquare group = new GroupManagement2.GroupSquare(String.valueOf((char)(97+counter)),dictionary[1],dictionary[0]);
+            groupSquareArrayList.add(group);
+            counter++;
+        }
+        read.close();
         for(int i = 0; i < groupSquareArrayList.size(); i++){
             centerBack.getChildren().addAll(groupSquareArrayList.get(i));
         }
@@ -102,10 +117,12 @@ public class GroupManagement2 extends Parent{
 
         public String tag;
         public String color;
+        public String description;
 
-        public GroupSquare(String tag, String color) {
+        public GroupSquare(String tag, String color, String description) {
             this.tag = tag;
             this.color = color;
+            this.description = description;
 
             refreshDisplay();
         }
@@ -133,7 +150,7 @@ public class GroupManagement2 extends Parent{
             tag.setLayoutY(8);
             tag.setLayoutX(19);
 
-            Label description = new Label("Description");
+            Label description = new Label(this.description);
             description.setLayoutX(77);
             description.setLayoutY(16);
             description.getStyleClass().add("description");

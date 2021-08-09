@@ -3,6 +3,7 @@ package sample;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TextFormatter;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
@@ -13,6 +14,8 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.control.Label;
 import javafx.scene.text.Font;
 
+import java.io.*;
+
 public class CreateGroup extends Parent{
 
     String tempName;
@@ -21,36 +24,22 @@ public class CreateGroup extends Parent{
     public CreateGroup(Boolean calendarOrEvent){
         CircleButton arrow = new CircleButton(new Image("img/arrow.png"));
         CircleButton confirm = new CircleButton(new Image("img/confirm.png"));
-        if(calendarOrEvent){
-            arrow.setOnMouseClicked(e->{
-                Scene newScene = new Scene(new EventManagement1(),375,667);
-                Main.getStage().setScene(newScene);
-            });
-            confirm.setOnMouseClicked(e->{
-                Scene newScene = new Scene(new EventManagement1(),375,667);
-                Main.getStage().setScene(newScene);
-                Group group = new Group(tempName,colorSelected);
-            });
-        }else{
-            arrow.setOnMouseClicked(e->{
-                Scene newScene = new Scene(new MonthBlock("Feb","6"),375,667);
-                Main.getStage().setScene(newScene);
-            });
-            confirm.setOnMouseClicked(e->{
-                Scene newScene = new Scene(new MonthBlock("Feb","6"),375,667);
-                Main.getStage().setScene(newScene);
-                Group group = new Group(tempName,colorSelected);
-            });
-        }
-
+        arrow.setOnMouseClicked(e->{
+            Scene newScene;
+            if(calendarOrEvent){
+                newScene = new Scene(new EventManagement1(), 375, 667);
+            }
+            else{
+                newScene = new Scene(new MonthBlock("Feb", "6"), 375, 667);
+            }
+            Main.getStage().setScene(newScene);
+        });
 
         HBox topAll = new HBox();
         topAll.setPrefSize(375,105);
         topAll.setPadding(new Insets(28,17,26,17));
         topAll.setSpacing(22);
         topAll.getChildren().addAll(arrow,confirm);
-
-
 
         Label name = new Label("Name");
         name.getStyleClass().add("title-label");
@@ -62,15 +51,12 @@ public class CreateGroup extends Parent{
             change.getControlNewText().length() <= 20 ? change : null));
         nameTextField.setPromptText("(20 words maximum)");
         nameTextField.getStyleClass().add("text-field");
-        tempName = nameTextField.getText();
 
         HBox nameAll = new HBox();
         nameAll.setPrefSize(323,27);
         nameAll.setSpacing(18);
         nameAll.getChildren().addAll(name,nameTextField);
         nameAll.setPadding(new Insets(0,0,0,0));
-
-
 
         Label color = new Label("Color");
         color.getStyleClass().add("title-label");
@@ -136,7 +122,34 @@ public class CreateGroup extends Parent{
         purple4.setOnMouseClicked(e -> colorSelected=purple4.getColor());
         purple5.setOnMouseClicked(e -> colorSelected=purple5.getColor());
 
+        confirm.setOnMouseClicked(e->{
+            if(color==null){
+                System.out.println("not yet implemented");
+            }
+            else{
+                File groupDataFile = new File(".\\out\\data\\GroupData.txt");
+                try {
+                    tempName = nameTextField.getText();
+                    FileWriter groupDataOutput = new FileWriter(groupDataFile,true) {
+                    };
+                    Group group = new Group(tempName,colorSelected);
+                    String msg = tempName+" "+colorSelected+"\n";
+                    groupDataOutput.write(msg);
+                    groupDataOutput.close();
+                } catch (IOException fileNotFoundException) {
+                    fileNotFoundException.printStackTrace();
+                }
+                Scene newScene;
+                if(calendarOrEvent){
+                    newScene = new Scene(new EventManagement1(), 375, 667);
+                }
+                else{
+                    newScene = new Scene(new MonthBlock("Feb", "6"), 375, 667);
+                }
+                Main.getStage().setScene(newScene);
+            }
 
+        });
 
         HBox colorAll = new HBox();
         colorAll.setPrefSize(225,146);
