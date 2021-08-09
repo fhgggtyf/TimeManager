@@ -9,9 +9,10 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 public class ColorSelect extends Parent {
     Color color;
-    AtomicBoolean isClicked = new AtomicBoolean(false);
+    Circle whiteCircle = new Circle();
 
     public Color getColor() {
+        whiteCircle.setFill(Color.WHITE);
         return color;
     }
 
@@ -19,7 +20,9 @@ public class ColorSelect extends Parent {
         this.color = Color.rgb(a,b,c,d);
         Circle circle = new Circle();
         circle.setRadius(10);
+        whiteCircle.setRadius(12);
         circle.setFill(Color.rgb(a,b,c,d));
-        getChildren().add(circle);
+        whiteCircle.setFill(Color.TRANSPARENT);
+        getChildren().addAll(whiteCircle,circle);
     }
 }
