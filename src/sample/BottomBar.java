@@ -46,8 +46,15 @@ public class BottomBar extends Parent {
         addButton.setLayoutY(50);
 
         addButton.setOnMouseClicked(event -> {
-            Scene newScene = new Scene(new CreateEvent(true),375,667);// ... commands which define the new scene.
-            Main.getStage().setScene(newScene);
+            if(visibility){
+                Scene newScene = new Scene(new CreateEvent(2),375,667);// ... commands which define the new scene.
+                Main.getStage().setScene(newScene);
+            }
+            else{
+                Scene newScene = new Scene(new CreateEvent(1),375,667);// ... commands which define the new scene.
+                Main.getStage().setScene(newScene);
+            }
+
         });
 
         CircleButton backButton = new CircleButton(new Image("img/BackButton.png"));
@@ -64,7 +71,7 @@ public class BottomBar extends Parent {
         });
 
         add_groupButton.setOnMouseClicked(e->{
-            Scene newScene = new Scene(new CreateGroup(),375,667);// ... commands which define the new scene.
+            Scene newScene = new Scene(new CreateGroup(true),375,667);// ... commands which define the new scene.
             newScene.getStylesheets().addAll("sample/MonthCalendarStyle.css");
             Main.getStage().setScene(newScene);
         });

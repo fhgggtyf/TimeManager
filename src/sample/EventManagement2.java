@@ -16,6 +16,7 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 
@@ -34,7 +35,12 @@ public class EventManagement2 extends Parent {
         upSpace1.setPrefSize(21,51);
         CircleButton folder = new CircleButton(new Image("img/folder.png"));
         folder.setOnMouseClicked(e->{
-            Scene newScene = new Scene(new GroupManagement1(),375,667);
+            Scene newScene = null;
+            try {
+                newScene = new Scene(new GroupManagement1(),375,667);
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
             Main.getStage().setScene(newScene);
         });
         Pane upSpace2 = new Pane();

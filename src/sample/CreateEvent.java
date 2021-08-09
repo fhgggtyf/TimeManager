@@ -33,7 +33,7 @@ public class CreateEvent extends Parent {
     }
 
     // 俩圆形按钮
-    private Parent top(boolean dailyOrEvent){
+    private Parent top(int back){
         HBox root = new HBox();
         root.setPrefSize(375,105);
 
@@ -48,21 +48,36 @@ public class CreateEvent extends Parent {
         saveButton.setLayoutY(53);
 
         backButton.setOnMouseClicked(event -> {
-            if(dailyOrEvent){
+            if(back==1){
                 Scene newScene = new Scene(new EventManagement1(),375,667);// ... commands which define the new scene.
                 Main.getStage().setScene(newScene);
             }
-            else{
+            else if(back==2){
                 Scene newScene = new Scene(new DailyToDo(),375,667);// ... commands which define the new scene.
                 Main.getStage().setScene(newScene);
             }
+            else{
+                Scene newScene = new Scene(new MonthBlock("June","23"),375,667);// ... commands which define the new scene.
+                Main.getStage().setScene(newScene);
+            }
+
         });
 
         saveButton.setOnMouseClicked(event ->{
             //Event tempEvent = new Event(tempEventName,tempEventNote,tempEventStart,tempEventEnd,tempEventAlarm,tempEventGroup);
             //day.addToEventList(tempEvent);
-            Scene newScene = new Scene(new DailyToDo(),375,667);// ... commands which define the new scene.
-            Main.getStage().setScene(newScene);
+            if(back==1){
+                Scene newScene = new Scene(new EventManagement1(),375,667);// ... commands which define the new scene.
+                Main.getStage().setScene(newScene);
+            }
+            else if(back==2){
+                Scene newScene = new Scene(new DailyToDo(),375,667);// ... commands which define the new scene.
+                Main.getStage().setScene(newScene);
+            }
+            else{
+                Scene newScene = new Scene(new MonthBlock("June","23"),375,667);// ... commands which define the new scene.
+                Main.getStage().setScene(newScene);
+            }
         });
 
         buttonFix.getChildren().addAll(backButton,saveButton);
@@ -197,7 +212,7 @@ public class CreateEvent extends Parent {
         return root;
     }
 
-    public CreateEvent(boolean dailyOrEvent){
+    public CreateEvent(int dailyOrEvent){
 
         // Show scene
         VBox back = new VBox();
