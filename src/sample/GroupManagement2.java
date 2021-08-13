@@ -29,7 +29,12 @@ public class GroupManagement2 extends Parent{
         topMenu.setPadding(new Insets(28,23,23,15));
         CircleButton arrow = new CircleButton(new Image("img/arrow.png"));
         arrow.setOnMouseClicked(e->{
-            Scene newScene = new Scene(new EventManagement1(),375,667);
+            Scene newScene = null;
+            try {
+                newScene = new Scene(new EventManagement1(),375,667);
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
             Main.getStage().setScene(newScene);
         });
         Pane upSpace1 = new Pane();

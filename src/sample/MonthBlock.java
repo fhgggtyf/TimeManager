@@ -12,6 +12,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 
+import java.io.IOException;
+
 public class MonthBlock extends Parent {
 
     public MonthBlock(String month, String day){
@@ -117,12 +119,22 @@ public class MonthBlock extends Parent {
         buttons.setPrefSize(123,50);
         CircleButton add = new CircleButton(new Image("img/add.PNG"));
         add.setOnMouseClicked(e->{
-            Scene newScene = new Scene(new CreateEvent(3),375,667);
+            Scene newScene = null;
+            try {
+                newScene = new Scene(new CreateEvent(3),375,667);
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
             Main.getStage().setScene(newScene);
         });
         CircleButton list = new CircleButton(new Image("img/list.PNG"));
         list.setOnMouseClicked(e->{
-            Scene newScene = new Scene(new EventManagement1(),375,667);
+            Scene newScene = null;
+            try {
+                newScene = new Scene(new EventManagement1(),375,667);
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
             Main.getStage().setScene(newScene);
         });
         CircleButton addGroup = new CircleButton(new Image("img/add_group.PNG"));

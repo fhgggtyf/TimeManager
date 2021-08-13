@@ -16,12 +16,12 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 
 
 public class EventManagement2 extends Parent {
-    public EventManagement2(){
+    public EventManagement2() throws IOException{
         HBox topMenu = new HBox();
         topMenu.setPrefSize(375,97);
         topMenu.setAlignment(Pos.CENTER_LEFT);
@@ -47,7 +47,12 @@ public class EventManagement2 extends Parent {
         upSpace2.setPrefSize(161,97);
         CircleButton confirm = new CircleButton(new Image("img/confirm.png"));
         confirm.setOnMouseClicked(e->{
-            Scene newScene = new Scene(new EventManagement1(),375,667);
+            Scene newScene = null;
+            try {
+                newScene = new Scene(new EventManagement1(),375,667);
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
             Main.getStage().setScene(newScene);
         });
 
@@ -57,13 +62,18 @@ public class EventManagement2 extends Parent {
         centerBack.setPrefSize(314,403);
         centerBack.setSpacing(9);
         //这里之后要用eventList代替
-        ArrayList<EventSquare> eventSquareArrayList = new ArrayList<EventSquare>();
-        EventSquare event1 = new EventSquare("TOK","03:40","06:40","note","blue");
-        EventSquare event2 = new EventSquare("Econ","08:52","11:52","","blue");
-        EventSquare event3 = new EventSquare("Do Chores","16:09","17:28","","yellow");
-        eventSquareArrayList.add(event1);
-        eventSquareArrayList.add(event2);
-        eventSquareArrayList.add(event3);
+        ArrayList<EventManagement1.EventSquare> eventSquareArrayList = new ArrayList<>();
+        File file = new File(".\\out\\data\\EventData.txt");
+        InputStreamReader read = new InputStreamReader(new FileInputStream(file));
+        BufferedReader bufferedReader = new BufferedReader(read);
+        String lineTxt = null;
+        while ((lineTxt = bufferedReader.readLine()) != null){
+            String str = lineTxt + "\r\n";
+            String[] dictionary = str.split(" ");
+            EventManagement1.EventSquare event = new EventManagement1.EventSquare(dictionary[0],dictionary[2],dictionary[3],dictionary[1],dictionary[5]);
+            eventSquareArrayList.add(event);
+        }
+        read.close();
         for(int i = 0; i < eventSquareArrayList.size(); i++){
             centerBack.getChildren().addAll(eventSquareArrayList.get(i));
         }
@@ -167,18 +177,14 @@ public class EventManagement2 extends Parent {
         }
 
         public void Display(){
-            Label eventName = new Label(name);
+            Label eventName = new Label(this.name);
             eventName.getStyleClass().add("name-label");
             eventName.setPrefSize(120,20);
 
             Rectangle eventNameRec = new Rectangle(120,20);
             eventNameRec.setArcHeight(10);
             eventNameRec.setArcWidth(10);
-            if(color.equals("blue")) {
-                eventNameRec.setFill(Color.rgb(94, 137, 162, 0.5));
-            }else if(color.equals("yellow")){
-                eventNameRec.setFill(Color.rgb(243,164,25,0.5));
-            }
+            eventNameRec.setFill(Color.web(color,0.5));
 
             Pane eventNameBack = new Pane();
             eventNameBack.setPrefSize(120,20);

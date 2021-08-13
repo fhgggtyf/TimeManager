@@ -2,6 +2,8 @@ package sample;
 
 import javafx.animation.*;
 import javafx.beans.property.*;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.geometry.*;
 import javafx.scene.*;
 import javafx.scene.control.*;
@@ -12,6 +14,9 @@ import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.util.*;
 
+import java.io.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 // 可以在找层次的时候 手动画一幅图 会能更好理解定位和分层过程
@@ -19,8 +24,8 @@ public class CreateEvent extends Parent {
 
     String tempEventName;
     String tempEventNote;
-    Calendar tempEventStart;
-    Calendar tempEventEnd;
+    Calendar tempEventStart = Calendar.getInstance();
+    Calendar tempEventEnd = Calendar.getInstance();
     boolean tempEventAlarm;
     Group tempEventGroup;
 
@@ -49,7 +54,12 @@ public class CreateEvent extends Parent {
 
         backButton.setOnMouseClicked(event -> {
             if(back==1){
-                Scene newScene = new Scene(new EventManagement1(),375,667);// ... commands which define the new scene.
+                Scene newScene = null;// ... commands which define the new scene.
+                try {
+                    newScene = new Scene(new EventManagement1(),375,667);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 Main.getStage().setScene(newScene);
             }
             else if(back==2){
@@ -63,21 +73,32 @@ public class CreateEvent extends Parent {
 
         });
 
-        saveButton.setOnMouseClicked(event ->{
-            //Event tempEvent = new Event(tempEventName,tempEventNote,tempEventStart,tempEventEnd,tempEventAlarm,tempEventGroup);
-            //day.addToEventList(tempEvent);
+        saveButton.setOnMouseClicked(e ->{
+            File eventDataFile = new File(".\\out\\data\\EventData.txt");
+            try {
+                FileWriter eventDataOutput = new FileWriter(eventDataFile,true){};
+                Event event = new Event(tempEventName,tempEventNote,tempEventStart,tempEventEnd,tempEventAlarm,tempEventGroup);
+                String msg = tempEventName+" "+tempEventNote+" "+tempEventStart+" "+tempEventEnd+" "+tempEventAlarm+" "+tempEventGroup+"\n";
+                eventDataOutput.write(msg);
+                eventDataOutput.close();
+            } catch (IOException fileNotFoundException) {
+                fileNotFoundException.printStackTrace();
+            }
+            Scene newScene = null;
             if(back==1){
-                Scene newScene = new Scene(new EventManagement1(),375,667);// ... commands which define the new scene.
-                Main.getStage().setScene(newScene);
+                try {
+                    newScene = new Scene(new EventManagement1(),375,667);
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                }
             }
             else if(back==2){
-                Scene newScene = new Scene(new DailyToDo(),375,667);// ... commands which define the new scene.
-                Main.getStage().setScene(newScene);
+                newScene = new Scene(new DailyToDo(), 375, 667);
             }
             else{
-                Scene newScene = new Scene(new MonthBlock("June","23"),375,667);// ... commands which define the new scene.
-                Main.getStage().setScene(newScene);
+                newScene = new Scene(new MonthBlock("June", "23"), 375, 667);
             }
+            Main.getStage().setScene(newScene);
         });
 
         buttonFix.getChildren().addAll(backButton,saveButton);
@@ -97,7 +118,7 @@ public class CreateEvent extends Parent {
         Label nameLabel = new Label("Name");
         nameLabel.getStyleClass().add("instructor-label");
         TextField nameTextField = new TextField();
-//        tempEventName=nameTextField.getText();
+        nameTextField.textProperty().addListener((observableValue, oddValue, newValue) -> tempEventName=nameTextField.getText());
         nameTextField.setLayoutX(66);
         nameTextField.setMinWidth(253);
         nameTextField.setPromptText("(5 words maximum)");
@@ -108,7 +129,7 @@ public class CreateEvent extends Parent {
         Label noteLabel = new Label("Note");
         noteLabel.getStyleClass().add("instructor-label");
         TextArea noteTextArea = new TextArea();
-//        tempEventNote=noteTextArea.getText();
+        noteTextArea.textProperty().addListener((observableValue, oddValue, newValue) -> tempEventNote=noteTextArea.getText());
         noteTextArea.setPrefRowCount(2);
         noteTextArea.setLayoutX(66); // 默认以下所有除label外第一个元素左端均为66
         noteTextArea.setPrefWidth(253);
@@ -143,33 +164,66 @@ public class CreateEvent extends Parent {
         Label fromLabel = new Label("From");
         fromLabel.getStyleClass().add("instructor-label");
         ChoiceBox fromYear = new ChoiceBox();
+        fromYear.getItems().addAll("2021","2022","2023");
+        fromYear.setValue("2021");
+        String tempFromYear = fromYear.getValue().toString();
         fromYear.setLayoutX(66);
         fromYear.setPrefSize(98,27);
         ChoiceBox fromHour = new ChoiceBox();
+        fromHour.getItems().addAll("00","01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20",21,"22","23");
+        fromHour.setValue("00");
+        String tempFromHour = fromHour.getValue().toString();
         fromHour.setLayoutX(190);
         fromHour.setPrefSize(54,27);
         ChoiceBox fromMin = new ChoiceBox();
+        fromMin.getItems().addAll("01","02","03","04");
+        fromMin.setValue("01");
+        String tempFromMin = fromMin.getValue().toString();
         fromMin.setLayoutX(268);
         fromMin.setPrefSize(54,27);
         VBox.setMargin(fromGetter, new Insets(12,12,12,12));
         indent1.setLayoutX(250);
+        //string转date转calendar
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH-mm");
+        Date tempFrom = new Date();
+        try {
+            tempFrom = simpleDateFormat.parse(tempFromHour+"-"+tempFromMin);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        tempEventStart.setTime(tempFrom);
+        fromGetter.getChildren().addAll(fromLabel,fromYear,fromHour,indent1,fromMin);
 
         Pane untilGetter = new Pane();
         Label untilLabel = new Label("Until");
         untilLabel.getStyleClass().add("instructor-label");
         ChoiceBox untilYear = new ChoiceBox();
+        untilYear.getItems().addAll("2021","2022","2023");
+        untilYear.setValue("2021");
+        String tempUntilYear = untilYear.getValue().toString();
         untilYear.setLayoutX(66);
         untilYear.setPrefSize(98,27);
         ChoiceBox untilHour = new ChoiceBox();
+        untilHour.getItems().addAll("00","01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20",21,"22","23");
+        untilHour.setValue("00");
+        String tempUntilHour = untilHour.getValue().toString();
         untilHour.setLayoutX(190);
         untilHour.setPrefSize(54,27);
         ChoiceBox untilMin = new ChoiceBox();
+        untilMin.getItems().add("01");
+        untilMin.setValue("01");
+        String tempUntilMin = untilMin.getValue().toString();
         untilMin.setLayoutX(268);
         untilMin.setPrefSize(54,27);
+        Date tempUntil = new Date();
+        try {
+            tempUntil = simpleDateFormat.parse(tempUntilHour+"-"+tempUntilMin);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        tempEventEnd.setTime(tempUntil);
         VBox.setMargin(untilGetter, new Insets(00,12,12,12));
         indent2.setLayoutX(250);
-
-        fromGetter.getChildren().addAll(fromLabel,fromYear,fromHour,indent1,fromMin);
         untilGetter.getChildren().addAll(untilLabel,untilYear,untilHour,indent2,untilMin);
 
         Pane alarmSwitch = new Pane();
@@ -179,21 +233,36 @@ public class CreateEvent extends Parent {
         alarmLabel.getStyleClass().add("instructor-label");
         alarmSwitch.getChildren().addAll(alarmLabel,toggle);
         VBox.setMargin(alarmSwitch, new Insets(15,12,27,12));
-
         mid2.getChildren().addAll(fromGetter,untilGetter,alarmSwitch);
-
+        toggle.setOnMouseClicked(e->{
+            toggle.switchedOn.set(!toggle.switchedOn.get());
+            tempEventAlarm = toggle.switchedOn.get();
+        });
         root.getChildren().addAll(mid2);
         root.setAlignment(Pos.CENTER);
         return root;
     }
 
     // Group
-    private Parent bot(){
+    private Parent bot() throws IOException {
         HBox root = new HBox();
 
         VBox bot = new VBox();
         bot.setPrefSize(344,50);
         bot.getStyleClass().addAll("light-background");
+
+//        Group的下拉栏还没有设计，这里只放一个读取的代码
+//        ArrayList<> groupShowingArrayList = new ArrayList<>();
+//        File file = new File(".\\out\\data\\GroupData.txt");
+//        InputStreamReader read = new InputStreamReader(new FileInputStream(file));
+//        BufferedReader bufferedReader = new BufferedReader(read);
+//        String lineTxt = null;
+//        while ((lineTxt = bufferedReader.readLine()) != null){
+//            String str = lineTxt + "\r\n";
+//            String[] dictionary = str.split(" ");
+//
+//        }
+
 
         Pane groupGetter = new Pane();
         Label groupLabel = new Label("Group");
@@ -212,7 +281,7 @@ public class CreateEvent extends Parent {
         return root;
     }
 
-    public CreateEvent(int dailyOrEvent){
+    public CreateEvent(int dailyOrEvent) throws IOException {
 
         // Show scene
         VBox back = new VBox();
@@ -262,12 +331,7 @@ public class CreateEvent extends Parent {
                 translateAnimation.setToX(isOn ? x - y : 0);
                 fillAnimation.setFromValue(isOn ? Color.rgb(0,0,0,0.3) : Color.rgb(255,255,255,0.3));
                 fillAnimation.setToValue(isOn ? Color.rgb(255,255,255,0.3) : Color.rgb(0,0,0,0.3));
-
                 animation.play();
-            });
-
-            setOnMouseClicked(e -> {
-                switchedOn.set(!switchedOn.get());
             });
         }
     }

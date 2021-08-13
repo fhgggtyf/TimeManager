@@ -25,9 +25,13 @@ public class CreateGroup extends Parent{
         CircleButton arrow = new CircleButton(new Image("img/arrow.png"));
         CircleButton confirm = new CircleButton(new Image("img/confirm.png"));
         arrow.setOnMouseClicked(e->{
-            Scene newScene;
+            Scene newScene = null;
             if(calendarOrEvent){
-                newScene = new Scene(new EventManagement1(), 375, 667);
+                try {
+                    newScene = new Scene(new EventManagement1(), 375, 667);
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                }
             }
             else{
                 newScene = new Scene(new MonthBlock("Feb", "6"), 375, 667);
@@ -789,9 +793,13 @@ public class CreateGroup extends Parent{
                 } catch (IOException fileNotFoundException) {
                     fileNotFoundException.printStackTrace();
                 }
-                Scene newScene;
+                Scene newScene = null;
                 if(calendarOrEvent){
-                    newScene = new Scene(new EventManagement1(), 375, 667);
+                    try {
+                        newScene = new Scene(new EventManagement1(), 375, 667);
+                    } catch (IOException ioException) {
+                        ioException.printStackTrace();
+                    }
                 }
                 else{
                     newScene = new Scene(new MonthBlock("Feb", "6"), 375, 667);

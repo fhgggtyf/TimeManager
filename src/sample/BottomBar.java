@@ -8,6 +8,8 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.*;
 import javafx.scene.shape.*;
 
+import java.io.IOException;
+
 public class BottomBar extends Parent {
 
     public BottomBar(String month, String day, Boolean visibility){
@@ -46,14 +48,22 @@ public class BottomBar extends Parent {
         addButton.setLayoutY(50);
 
         addButton.setOnMouseClicked(event -> {
+            Scene newScene = null;
             if(visibility){
-                Scene newScene = new Scene(new CreateEvent(2),375,667);// ... commands which define the new scene.
-                Main.getStage().setScene(newScene);
+                try{
+                    newScene = new Scene(new CreateEvent(2),375,667);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
             else{
-                Scene newScene = new Scene(new CreateEvent(1),375,667);// ... commands which define the new scene.
-                Main.getStage().setScene(newScene);
+                try{
+                    newScene = new Scene(new CreateEvent(1),375,667);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
+            Main.getStage().setScene(newScene);
 
         });
 
