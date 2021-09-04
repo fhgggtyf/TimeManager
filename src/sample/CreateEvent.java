@@ -26,6 +26,12 @@ public class CreateEvent extends Parent {
     String tempEventNote;
     Calendar tempEventStart = Calendar.getInstance();
     Calendar tempEventEnd = Calendar.getInstance();
+    String fromHalfDay;
+    String fromHour;
+    String fromMin;
+    String untilHalfDay;
+    String untilHour;
+    String untilMin;
     boolean tempEventAlarm;
     Group tempEventGroup;
 
@@ -76,9 +82,36 @@ public class CreateEvent extends Parent {
         saveButton.setOnMouseClicked(e ->{
             File eventDataFile = new File(".\\out\\data\\EventData.txt");
             try {
+                //string转date转calendar
+                if(fromHalfDay=="PM"){
+                    fromHour=Integer.toString(Integer.parseInt(fromHour)+12);
+                }
+                String tempFromHour=fromHour;
+                String tempFromMin=fromMin;
+                SimpleDateFormat simpleDateFormat1 = new SimpleDateFormat("HH-mm");
+                Date tempFrom = new Date();
+                try {
+                    tempFrom = simpleDateFormat1.parse(tempFromHour+"-"+tempFromMin);
+                } catch (ParseException event) {
+                    event.printStackTrace();
+                }
+                tempEventStart.setTime(tempFrom);
+                if(untilHalfDay=="PM"){
+                    untilHour=Integer.toString(Integer.parseInt(untilHour)+12);
+                }
+                String tempUntilHour=untilHour;
+                String tempUntilMin=untilMin;
+                SimpleDateFormat simpleDateFormat2 = new SimpleDateFormat("HH-mm");
+                Date tempUntil = new Date();
+                try {
+                    tempUntil = simpleDateFormat2.parse(tempUntilHour+"-"+tempUntilMin);
+                } catch (ParseException event) {
+                    event.printStackTrace();
+                }
+                tempEventEnd.setTime(tempUntil);
                 FileWriter eventDataOutput = new FileWriter(eventDataFile,true){};
                 Event event = new Event(tempEventName,tempEventNote,tempEventStart,tempEventEnd,tempEventAlarm,tempEventGroup);
-                String msg = tempEventName+" "+tempEventNote+" "+tempEventStart+" "+tempEventEnd+" "+tempEventAlarm+" "+tempEventGroup+"\n";
+                String msg = tempEventName+";"+tempEventNote+";"+tempEventStart+";"+tempEventEnd+";"+tempEventAlarm+";"+tempEventGroup+"\n";
                 eventDataOutput.write(msg);
                 eventDataOutput.close();
             } catch (IOException fileNotFoundException) {
@@ -163,68 +196,68 @@ public class CreateEvent extends Parent {
         Pane fromGetter = new Pane();
         Label fromLabel = new Label("From");
         fromLabel.getStyleClass().add("instructor-label");
-        ChoiceBox fromYear = new ChoiceBox();
-        fromYear.getItems().addAll("2021","2022","2023");
-        fromYear.setValue("2021");
-        String tempFromYear = fromYear.getValue().toString();
-        fromYear.setLayoutX(66);
-        fromYear.setPrefSize(98,27);
-        ChoiceBox fromHour = new ChoiceBox();
-        fromHour.getItems().addAll("00","01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20",21,"22","23");
-        fromHour.setValue("00");
-        String tempFromHour = fromHour.getValue().toString();
-        fromHour.setLayoutX(190);
-        fromHour.setPrefSize(54,27);
-        ChoiceBox fromMin = new ChoiceBox();
-        fromMin.getItems().addAll("01","02","03","04");
-        fromMin.setValue("01");
-        String tempFromMin = fromMin.getValue().toString();
-        fromMin.setLayoutX(268);
-        fromMin.setPrefSize(54,27);
+        ChoiceBox<String> fromHalfDayCBox = new ChoiceBox<>();
+        fromHalfDayCBox.getItems().addAll("AM","PM");
+        fromHalfDayCBox.setValue("AM");
+        fromHalfDay="AM";
+        fromHalfDayCBox.getSelectionModel().selectedIndexProperty().addListener((observableValue, oddValue, newValue) -> fromHalfDay=fromHalfDayCBox.getValue());
+        fromHalfDayCBox.setLayoutX(66);
+        fromHalfDayCBox.setPrefSize(98,27);
+        ChoiceBox<String> fromHourCBox = new ChoiceBox<>();
+        fromHourCBox.getItems().addAll("01","02","03","04","05","06","07","08","09","10","11","12");
+        fromHourCBox.setValue("01");
+        fromHour="01";
+        fromHourCBox.getSelectionModel().selectedIndexProperty().addListener((observableValue, oddValue, newValue) -> fromHour=fromHourCBox.getValue());
+        fromHourCBox.setLayoutX(190);
+        fromHourCBox.setPrefSize(54,27);
+        ChoiceBox<String> fromMinCBox = new ChoiceBox<>();
+        fromMinCBox.getItems().addAll("00","01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50","51","52","53","54","55","56","57","58","59");
+        fromMinCBox.setValue("00");
+        fromMin="00";
+        fromMinCBox.getSelectionModel().selectedIndexProperty().addListener((observableValue, oddValue, newValue) -> fromMin=fromMinCBox.getValue());
+        fromMinCBox.setLayoutX(268);
+        fromMinCBox.setPrefSize(54,27);
         VBox.setMargin(fromGetter, new Insets(12,12,12,12));
         indent1.setLayoutX(250);
         //string转date转calendar
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH-mm");
-        Date tempFrom = new Date();
-        try {
-            tempFrom = simpleDateFormat.parse(tempFromHour+"-"+tempFromMin);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        tempEventStart.setTime(tempFrom);
-        fromGetter.getChildren().addAll(fromLabel,fromYear,fromHour,indent1,fromMin);
+//        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH-mm");
+//        Date tempFrom = new Date();
+//        try {
+//            tempFrom = simpleDateFormat.parse(tempFromHour+"-"+tempFromMin);
+//        } catch (ParseException e) {
+//            e.printStackTrace();
+//        }
+//        tempEventStart.setTime(tempFrom);
+        fromGetter.getChildren().addAll(fromLabel,fromHalfDayCBox,fromHourCBox,indent1,fromMinCBox);
 
         Pane untilGetter = new Pane();
         Label untilLabel = new Label("Until");
         untilLabel.getStyleClass().add("instructor-label");
-        ChoiceBox untilYear = new ChoiceBox();
-        untilYear.getItems().addAll("2021","2022","2023");
-        untilYear.setValue("2021");
-        String tempUntilYear = untilYear.getValue().toString();
-        untilYear.setLayoutX(66);
-        untilYear.setPrefSize(98,27);
-        ChoiceBox untilHour = new ChoiceBox();
-        untilHour.getItems().addAll("00","01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20",21,"22","23");
-        untilHour.setValue("00");
-        String tempUntilHour = untilHour.getValue().toString();
-        untilHour.setLayoutX(190);
-        untilHour.setPrefSize(54,27);
-        ChoiceBox untilMin = new ChoiceBox();
-        untilMin.getItems().add("01");
-        untilMin.setValue("01");
-        String tempUntilMin = untilMin.getValue().toString();
-        untilMin.setLayoutX(268);
-        untilMin.setPrefSize(54,27);
-        Date tempUntil = new Date();
-        try {
-            tempUntil = simpleDateFormat.parse(tempUntilHour+"-"+tempUntilMin);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        tempEventEnd.setTime(tempUntil);
+        ChoiceBox<String> untilHalfDayCBox = new ChoiceBox();
+        untilHalfDayCBox.getItems().addAll("AM","PM");
+        untilHalfDayCBox.setValue("AM");
+        untilHalfDay="AM";
+        untilHalfDayCBox.getSelectionModel().selectedIndexProperty().addListener((observableValue, oddValue, newValue) -> untilHalfDay=untilHalfDayCBox.getValue());
+        untilHalfDayCBox.setLayoutX(66);
+        untilHalfDayCBox.setPrefSize(98,27);
+        ChoiceBox<String> untilHourCBox = new ChoiceBox();
+        untilHourCBox.getItems().addAll("01","02","03","04","05","06","07","08","09","10","11","12");
+        untilHourCBox.setValue("01");
+        untilHour="01";
+        untilHourCBox.getSelectionModel().selectedIndexProperty().addListener((observableValue, oddValue, newValue) -> untilHour=untilHourCBox.getValue());
+        untilHourCBox.setLayoutX(190);
+        untilHourCBox.setPrefSize(54,27);
+        ChoiceBox<String> untilMinCBox = new ChoiceBox();
+        untilMinCBox.getItems().addAll("00","01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50","51","52","53","54","55","56","57","58","59");
+        untilMinCBox.setValue("00");
+        untilMin="00";
+        untilMinCBox.getSelectionModel().selectedIndexProperty().addListener((observableValue, oddValue, newValue) -> untilMin=untilMinCBox.getValue());
+        untilMinCBox.setLayoutX(268);
+        untilMinCBox.setPrefSize(54,27);
+
         VBox.setMargin(untilGetter, new Insets(00,12,12,12));
         indent2.setLayoutX(250);
-        untilGetter.getChildren().addAll(untilLabel,untilYear,untilHour,indent2,untilMin);
+        untilGetter.getChildren().addAll(untilLabel,untilHalfDayCBox,untilHourCBox,indent2,untilMinCBox);
 
         Pane alarmSwitch = new Pane();
         ToggleSwitch toggle = new ToggleSwitch(54,27);
@@ -250,19 +283,6 @@ public class CreateEvent extends Parent {
         VBox bot = new VBox();
         bot.setPrefSize(344,50);
         bot.getStyleClass().addAll("light-background");
-
-//        Group的下拉栏还没有设计，这里只放一个读取的代码
-//        ArrayList<> groupShowingArrayList = new ArrayList<>();
-//        File file = new File(".\\out\\data\\GroupData.txt");
-//        InputStreamReader read = new InputStreamReader(new FileInputStream(file));
-//        BufferedReader bufferedReader = new BufferedReader(read);
-//        String lineTxt = null;
-//        while ((lineTxt = bufferedReader.readLine()) != null){
-//            String str = lineTxt + "\r\n";
-//            String[] dictionary = str.split(" ");
-//
-//        }
-
 
         Pane groupGetter = new Pane();
         Label groupLabel = new Label("Group");
