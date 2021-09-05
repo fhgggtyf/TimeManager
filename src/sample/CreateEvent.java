@@ -34,6 +34,7 @@ public class CreateEvent extends Parent {
     String untilMin;
     boolean tempEventAlarm;
     Group tempEventGroup;
+    String groupName;
 
     // 浅色框之间的空隙
     private Parent spacing(int height){
@@ -82,12 +83,27 @@ public class CreateEvent extends Parent {
         saveButton.setOnMouseClicked(e ->{
             File eventDataFile = new File(".\\out\\data\\EventData.txt");
             try {
+                File file = new File(".\\out\\data\\GroupData.txt");
+                InputStreamReader read = new InputStreamReader(
+                        new FileInputStream(file));//考虑到编码格式
+                BufferedReader bufferedReader = new BufferedReader(read);
+                String lineTxt = null;
+
+                while((lineTxt = bufferedReader.readLine()) != null){
+                    String str=lineTxt+"\r\n";
+                    String[] dictionary =  str.split(" ");
+                    if(dictionary[0]==groupName){
+                        tempEventGroup = new Group(groupName,Color.web(dictionary[1].substring(0,8)));
+                        break;
+                    }
+                }
                 //string转date转calendar
                 if(fromHalfDay=="PM"){
                     fromHour=Integer.toString(Integer.parseInt(fromHour)+12);
                 }
                 String tempFromHour=fromHour;
                 String tempFromMin=fromMin;
+                Calendar nowTime = Calendar.getInstance();
                 SimpleDateFormat simpleDateFormat1 = new SimpleDateFormat("HH-mm");
                 Date tempFrom = new Date();
                 try {
@@ -96,6 +112,16 @@ public class CreateEvent extends Parent {
                     event.printStackTrace();
                 }
                 tempEventStart.setTime(tempFrom);
+                if(back==1){
+                    //set time according to window they are on
+                }
+                else if(back==2){
+                    //set time according to window they are on
+                }
+                else{
+                    //set date today
+                    tempEventStart.set(nowTime.get(Calendar.YEAR),nowTime.get(Calendar.MONTH),nowTime.get(Calendar.DATE));
+                }
                 if(untilHalfDay=="PM"){
                     untilHour=Integer.toString(Integer.parseInt(untilHour)+12);
                 }
@@ -109,9 +135,19 @@ public class CreateEvent extends Parent {
                     event.printStackTrace();
                 }
                 tempEventEnd.setTime(tempUntil);
+                if(back==1){
+                    //set time according to window they are on
+                }
+                else if(back==2){
+                    //set time according to window they are on
+                }
+                else{
+                    //set date today
+                    tempEventEnd.set(nowTime.get(Calendar.YEAR),nowTime.get(Calendar.MONTH),nowTime.get(Calendar.DATE));
+                }
                 FileWriter eventDataOutput = new FileWriter(eventDataFile,true){};
                 Event event = new Event(tempEventName,tempEventNote,tempEventStart,tempEventEnd,tempEventAlarm,tempEventGroup);
-                String msg = tempEventName+";"+tempEventNote+";"+tempEventStart+";"+tempEventEnd+";"+tempEventAlarm+";"+tempEventGroup+"\n";
+                String msg = tempEventName+";"+tempEventNote+";"+tempEventStart+";"+tempEventEnd+";"+tempEventAlarm+";"+groupName+"\n";
                 eventDataOutput.write(msg);
                 eventDataOutput.close();
             } catch (IOException fileNotFoundException) {
@@ -287,7 +323,28 @@ public class CreateEvent extends Parent {
         Pane groupGetter = new Pane();
         Label groupLabel = new Label("Group");
         groupLabel.getStyleClass().add("instructor-label");
-        ChoiceBox groups = new ChoiceBox();
+        ChoiceBox<String> groups = new ChoiceBox();
+
+        ArrayList<String> groupArrayList = new ArrayList<>();
+        File file = new File(".\\out\\data\\GroupData.txt");
+        InputStreamReader read = new InputStreamReader(
+                new FileInputStream(file));//考虑到编码格式
+        BufferedReader bufferedReader = new BufferedReader(read);
+        String lineTxt = null;
+        while((lineTxt = bufferedReader.readLine()) != null){
+            String str=lineTxt+"\r\n";
+            String[] dictionary =  str.split(" ");
+            groupArrayList.add(dictionary[0]);
+        }
+
+        for(int i = 0; i < groupArrayList.size(); i++){
+            groups.getItems().add(groupArrayList.get(i));
+            if(i==0){
+                groups.setValue(groupArrayList.get(0));
+            }
+        }
+        groups.getSelectionModel().selectedIndexProperty().addListener((observableValue, oddValue, newValue) -> groupName=groups.getValue());
+        groupName=groups.getValue();
         groups.setLayoutX(66);
         groups.setPrefSize(254,27);
         groupGetter.getChildren().addAll(groupLabel,groups);
