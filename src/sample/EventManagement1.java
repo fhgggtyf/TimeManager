@@ -28,7 +28,12 @@ public class EventManagement1 extends Parent {
         topMenu.setPadding(new Insets(28,23,23,15));
         CircleButton arrow = new CircleButton(new Image("img/arrow.png"));
         arrow.setOnMouseClicked(e->{
-            Scene newScene = new Scene(new MonthBlock("Feb","6"),375,667);
+            Scene newScene = null;
+            try {
+                newScene = new Scene(new MonthBlock("Feb","6"),375,667);
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
             Main.getStage().setScene(newScene);
         });
         Pane upSpace1 = new Pane();
@@ -69,7 +74,7 @@ public class EventManagement1 extends Parent {
         String lineTxt = null;
         while ((lineTxt = bufferedReader.readLine()) != null){
             String str = lineTxt + "\r\n";
-            String[] dictionary = str.split(" ");
+            String[] dictionary = str.split(";");
             EventSquare event = new EventSquare(dictionary[0],dictionary[2],dictionary[3],dictionary[1],dictionary[5]);
             eventSquareArrayList.add(event);
         }

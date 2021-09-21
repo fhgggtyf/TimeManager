@@ -59,6 +59,12 @@ public class CreateEvent extends Parent {
         saveButton.setLayoutX(100);
         saveButton.setLayoutY(53);
 
+        String[] months={"Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"};
+        Calendar cal=Calendar.getInstance();
+        int month=cal.get(Calendar.MONTH);
+        int day=cal.get(Calendar.DATE);
+        String monthNow=months[month];
+
         backButton.setOnMouseClicked(event -> {
             if(back==1){
                 Scene newScene = null;// ... commands which define the new scene.
@@ -70,11 +76,16 @@ public class CreateEvent extends Parent {
                 Main.getStage().setScene(newScene);
             }
             else if(back==2){
-                Scene newScene = new Scene(new DailyToDo(),375,667);// ... commands which define the new scene.
+                Scene newScene = new Scene(new DailyToDo(monthNow,day+""),375,667);// ... commands which define the new scene.
                 Main.getStage().setScene(newScene);
             }
             else{
-                Scene newScene = new Scene(new MonthBlock("June","23"),375,667);// ... commands which define the new scene.
+                Scene newScene = null;// ... commands which define the new scene.
+                try {
+                    newScene = new Scene(new MonthBlock(monthNow,day+""),375,667);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 Main.getStage().setScene(newScene);
             }
 
@@ -162,10 +173,14 @@ public class CreateEvent extends Parent {
                 }
             }
             else if(back==2){
-                newScene = new Scene(new DailyToDo(), 375, 667);
+                newScene = new Scene(new DailyToDo(monthNow,day+""), 375, 667);
             }
             else{
-                newScene = new Scene(new MonthBlock("June", "23"), 375, 667);
+                try {
+                    newScene = new Scene(new MonthBlock("June", "23"), 375, 667);
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                }
             }
             Main.getStage().setScene(newScene);
         });

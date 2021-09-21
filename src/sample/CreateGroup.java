@@ -15,6 +15,7 @@ import javafx.scene.control.Label;
 import javafx.scene.text.Font;
 
 import java.io.*;
+import java.util.Calendar;
 
 public class CreateGroup extends Parent{
 
@@ -24,6 +25,11 @@ public class CreateGroup extends Parent{
     public CreateGroup(Boolean calendarOrEvent){
         CircleButton arrow = new CircleButton(new Image("img/arrow.png"));
         CircleButton confirm = new CircleButton(new Image("img/confirm.png"));
+        String[] months={"Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"};
+        Calendar cal=Calendar.getInstance();
+        int month=cal.get(Calendar.MONTH);
+        int day=cal.get(Calendar.DATE);
+        String monthNow=months[month];
         arrow.setOnMouseClicked(e->{
             Scene newScene = null;
             if(calendarOrEvent){
@@ -34,7 +40,11 @@ public class CreateGroup extends Parent{
                 }
             }
             else{
-                newScene = new Scene(new MonthBlock("Feb", "6"), 375, 667);
+                try {
+                    newScene = new Scene(new MonthBlock(monthNow, day+""), 375, 667);
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                }
             }
             Main.getStage().setScene(newScene);
         });
@@ -802,7 +812,11 @@ public class CreateGroup extends Parent{
                     }
                 }
                 else{
-                    newScene = new Scene(new MonthBlock("Feb", "6"), 375, 667);
+                    try {
+                        newScene = new Scene(new MonthBlock(monthNow, day+""), 375, 667);
+                    } catch (IOException ioException) {
+                        ioException.printStackTrace();
+                    }
                 }
                 Main.getStage().setScene(newScene);
             }

@@ -46,11 +46,11 @@ public class DailyToDo extends Parent {
         return root;
     }
 
-    public DailyToDo(){
+    public DailyToDo(String month, String day){
         // Show scene
         VBox back = new VBox();
 
-        BottomBar bottomBar = new BottomBar("FEB","6",true);
+        BottomBar bottomBar = new BottomBar(month,day,true);
         bottomBar.setLayoutY(547);
 
         back.getChildren().addAll(dayBar(),bottomBar);

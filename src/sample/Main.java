@@ -7,20 +7,26 @@ import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Calendar;
 
 public class Main extends Application {
     private static Stage guiStage;
+    private String[] months={"Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"};
 
     public static Stage getStage() {
         return guiStage;
     }
 
     @Override
-    public void start(Stage primaryStage){
+    public void start(Stage primaryStage) throws IOException {
         primaryStage.setTitle("Hello World");
-        Parent root = new MonthBlock("June","23");
+        Calendar cal=Calendar.getInstance();
+        int month=cal.get(Calendar.MONTH);
+        int day=cal.get(Calendar.DATE);
+        String monthNow=months[month];
+        Parent root = new MonthBlock(monthNow,day+"");
         guiStage = primaryStage;
         Scene scene = new Scene(root,375 , 667);
         primaryStage.setScene(scene);

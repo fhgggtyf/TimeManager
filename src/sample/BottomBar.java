@@ -9,6 +9,7 @@ import javafx.scene.paint.*;
 import javafx.scene.shape.*;
 
 import java.io.IOException;
+import java.util.Calendar;
 
 public class BottomBar extends Parent {
 
@@ -74,8 +75,18 @@ public class BottomBar extends Parent {
         add_groupButton.setLayoutX(301);
         add_groupButton.setLayoutY(50);
 
+        Calendar cal=Calendar.getInstance();
+        int dayNow=cal.get(Calendar.DATE);
+        int monthNow=cal.get(Calendar.MONTH);
+        String[] months={"Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"};
+        String monthNowStr=months[monthNow];
         backButton.setOnMouseClicked(event -> {
-            Scene newScene = new Scene(new MonthBlock("July","29"),375,667);// ... commands which define the new scene.
+            Scene newScene = null;// ... commands which define the new scene.
+            try {
+                newScene = new Scene(new MonthBlock(monthNowStr,dayNow+""),375,667);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             newScene.getStylesheets().addAll("sample/MonthCalendarStyle.css");
             Main.getStage().setScene(newScene);
         });
