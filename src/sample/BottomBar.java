@@ -97,7 +97,7 @@ public class BottomBar extends Parent {
             Main.getStage().setScene(newScene);
         });
 
-        LeftRightButton leftRightButton = new LeftRightButton();
+        LeftRightButton leftRightButton = new LeftRightButton(month,day);
         leftRightButton.setLayoutX(102);
         leftRightButton.setLayoutY(25);
 
