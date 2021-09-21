@@ -71,11 +71,27 @@ public class EventManagement1 extends Parent {
         File file = new File(".\\out\\data\\EventData.txt");
         InputStreamReader read = new InputStreamReader(new FileInputStream(file));
         BufferedReader bufferedReader = new BufferedReader(read);
-        String lineTxt = null;
+        String lineTxt;
         while ((lineTxt = bufferedReader.readLine()) != null){
-            String str = lineTxt + "\r\n";
+            String str = lineTxt;
             String[] dictionary = str.split(";");
-            EventSquare event = new EventSquare(dictionary[0],dictionary[2],dictionary[3],dictionary[1],dictionary[5]);
+
+            String color = null;
+            File file2 = new File(".\\out\\data\\GroupData.txt");
+            InputStreamReader read2 = new InputStreamReader(
+                    new FileInputStream(file2));//考虑到编码格式
+            BufferedReader bufferedReader2 = new BufferedReader(read2);
+            String lineTxt2;
+            while((lineTxt2 = bufferedReader2.readLine()) != null){
+                String str2=lineTxt2;
+                String[] dictionary2 =  str2.split(" ");
+                if(dictionary2[0].equals(dictionary[5])){
+                    color = dictionary2[1];
+                }
+            }
+            read2.close();
+
+            EventSquare event = new EventSquare(dictionary[0],dictionary[2],dictionary[3],dictionary[1],color);
             eventSquareArrayList.add(event);
         }
         read.close();
