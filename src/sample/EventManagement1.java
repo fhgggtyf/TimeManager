@@ -12,12 +12,13 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 
 public class EventManagement1 extends Parent {
@@ -91,7 +92,11 @@ public class EventManagement1 extends Parent {
             }
             read2.close();
 
-            EventSquare event = new EventSquare(dictionary[0],dictionary[2],dictionary[3],dictionary[1],color);
+            Calendar startTime = Calendar.getInstance();
+            startTime.setTime(new Date(Long.parseLong(dictionary[2])));
+            Calendar endTime = Calendar.getInstance();
+            endTime.setTime(new Date(Long.parseLong(dictionary[3])));
+            EventSquare event = new EventSquare(dictionary[0],startTime,endTime,dictionary[1],color);
             eventSquareArrayList.add(event);
         }
         read.close();
@@ -141,12 +146,12 @@ public class EventManagement1 extends Parent {
     public static class EventSquare extends Parent{
 
         public String name;
-        public String startTime;
-        public String endTime;
+        public Calendar startTime;
+        public Calendar endTime;
         public String note;
         public String color;
 
-        public EventSquare(String name, String startTime, String endTime, String note, String color) {
+        public EventSquare(String name, Calendar startTime, Calendar endTime, String note, String color) {
             this.name = name;
             this.startTime = startTime;
             this.endTime = endTime;
@@ -163,19 +168,19 @@ public class EventManagement1 extends Parent {
             this.name = name;
         }
 
-        public String getStartTime() {
+        public Calendar getStartTime() {
             return startTime;
         }
 
-        public void setStartTime(String startTime) {
+        public void setStartTime(Calendar startTime) {
             this.startTime = startTime;
         }
 
-        public String getEndTime() {
+        public Calendar getEndTime() {
             return endTime;
         }
 
-        public void setEndTime(String endTime) {
+        public void setEndTime(Calendar endTime) {
             this.endTime = endTime;
         }
 
@@ -188,6 +193,13 @@ public class EventManagement1 extends Parent {
         public String getColor() { return color; }
 
         public void setColor(String color) { this.color = color; }
+
+        public String isOneDigit(String time){
+            if (time.length() == 1){
+                time = "0" + time;
+            }
+            return time;
+        }
 
         public void Display(){
             Label eventName = new Label(this.name);
@@ -203,7 +215,23 @@ public class EventManagement1 extends Parent {
             eventNameBack.setPrefSize(120,20);
             eventNameBack.getChildren().addAll(eventNameRec,eventName);
 
-            Label eventTime = new Label(startTime+" - "+endTime);
+            String tempStartTime;
+            String startTimeHour;
+            String startTimeMinute;
+            startTimeHour = String.valueOf(startTime.get(Calendar.HOUR_OF_DAY));
+            startTimeMinute = String.valueOf(startTime.get(Calendar.MINUTE));
+            startTimeHour = isOneDigit(startTimeHour);
+            startTimeMinute = isOneDigit(startTimeMinute);
+            tempStartTime = startTimeHour + ":" +startTimeMinute;
+            String tempEndTime;
+            String endTimeHour;
+            String endTimeMinute;
+            endTimeHour = String.valueOf(endTime.get(Calendar.HOUR_OF_DAY));
+            endTimeMinute = String.valueOf(endTime.get(Calendar.MINUTE));
+            endTimeHour = isOneDigit(endTimeHour);
+            endTimeMinute = isOneDigit(endTimeMinute);
+            tempEndTime = endTimeHour+":"+endTimeMinute;
+            Label eventTime = new Label(tempStartTime+" - "+tempEndTime);
             eventTime.getStyleClass().add("time-label");
 
             Pane eventTimeBack = new Pane();
@@ -218,17 +246,12 @@ public class EventManagement1 extends Parent {
             Rectangle separationLine = new Rectangle(2,50);
             separationLine.setFill(Color.rgb(167,167,167,1));
 
-            Boolean noteStatus = Boolean.TRUE;
-            if(note.equals("")){
-                note = "No description";
-                noteStatus = Boolean.FALSE;
-            }
             Label description = new Label(this.note);
             description.setPrefSize(120,50);
-            if(noteStatus){
-                description.getStyleClass().add("descriptionActivated-label");
-            }else{
+            if(note.equals("No description")){
                 description.getStyleClass().add("descriptionNull-label");
+            }else{
+                description.getStyleClass().add("descriptionActivated-label");
             }
 
             HBox backSquareContainer = new HBox();

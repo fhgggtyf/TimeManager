@@ -40,7 +40,6 @@ public class CreateEvent extends Parent {
     private Parent spacing(int height){
         Pane root = new Pane();
         root.setPrefSize(375,height);
-
         return root;
     }
 
@@ -103,53 +102,52 @@ public class CreateEvent extends Parent {
                 while((lineTxt = bufferedReader.readLine()) != null){
                     String str=lineTxt+"\r\n";
                     String[] dictionary =  str.split(" ");
-                    if(dictionary[0]==groupName){
+                    if(dictionary[0].equals(groupName)){
                         tempEventGroup = new Group(groupName,Color.web(dictionary[1].substring(0,8)));
                         break;
                     }
                 }
                 //string转date转calendar
-                if(fromHalfDay=="PM"){
-                    fromHour=Integer.toString(Integer.parseInt(fromHour)+12);
+                if(fromHalfDay.equals("PM")){
+                    fromHour = Integer.toString(Integer.parseInt(fromHour)+12);
                 }
-                String tempFromHour=fromHour;
-                String tempFromMin=fromMin;
+                String tempFromHour = fromHour;
+                String tempFromMin = fromMin;
                 Calendar nowTime = Calendar.getInstance();
                 SimpleDateFormat simpleDateFormat1 = new SimpleDateFormat("HH-mm");
                 Date tempFrom = new Date();
                 try {
-                    tempFrom = simpleDateFormat1.parse(tempFromHour+"-"+tempFromMin);
+                    tempFrom = simpleDateFormat1.parse(tempFromHour + "-" + tempFromMin);
                 } catch (ParseException event) {
                     event.printStackTrace();
                 }
-                tempEventStart.setTime(tempFrom);
-                if(back==1){
+                if(back == 1){
                     //set time according to window they are on
                 }
-                else if(back==2){
+                else if(back == 2){
                     //set time according to window they are on
                 }
                 else{
                     //set date today
-                    tempEventStart.set(nowTime.get(Calendar.YEAR),nowTime.get(Calendar.MONTH),nowTime.get(Calendar.DATE));
+                    tempEventStart.set(nowTime.get(Calendar.YEAR),nowTime.get(Calendar.MONTH),nowTime.get(Calendar.DATE),tempFrom.getHours(),tempFrom.getMinutes(),0);
                 }
-                if(untilHalfDay=="PM"){
+                if(untilHalfDay == "PM"){
                     untilHour=Integer.toString(Integer.parseInt(untilHour)+12);
                 }
-                String tempUntilHour=untilHour;
-                String tempUntilMin=untilMin;
+                String tempUntilHour = untilHour;
+                String tempUntilMin = untilMin;
                 SimpleDateFormat simpleDateFormat2 = new SimpleDateFormat("HH-mm");
                 Date tempUntil = new Date();
                 try {
-                    tempUntil = simpleDateFormat2.parse(tempUntilHour+"-"+tempUntilMin);
+                    tempUntil = simpleDateFormat2.parse(tempUntilHour + "-" + tempUntilMin);
                 } catch (ParseException event) {
                     event.printStackTrace();
                 }
                 tempEventEnd.setTime(tempUntil);
-                if(back==1){
+                if(back == 1){
                     //set time according to window they are on
                 }
-                else if(back==2){
+                else if(back == 2){
                     //set time according to window they are on
                 }
                 else{
@@ -157,8 +155,14 @@ public class CreateEvent extends Parent {
                     tempEventEnd.set(nowTime.get(Calendar.YEAR),nowTime.get(Calendar.MONTH),nowTime.get(Calendar.DATE));
                 }
                 FileWriter eventDataOutput = new FileWriter(eventDataFile,true){};
+                if(tempEventName == null){
+                    tempEventName = "No name";
+                }
+                if(tempEventNote == null){
+                    tempEventNote = "No description";
+                }
                 Event event = new Event(tempEventName,tempEventNote,tempEventStart,tempEventEnd,tempEventAlarm,tempEventGroup);
-                String msg = tempEventName+";"+tempEventNote+";"+tempEventStart+";"+tempEventEnd+";"+tempEventAlarm+";"+groupName+"\n";
+                String msg = tempEventName+";"+tempEventNote+";"+tempEventStart.getTimeInMillis()+";"+tempEventEnd.getTimeInMillis()+";"+tempEventAlarm+";"+groupName+"\n";
                 eventDataOutput.write(msg);
                 eventDataOutput.close();
             } catch (IOException fileNotFoundException) {
@@ -202,7 +206,7 @@ public class CreateEvent extends Parent {
         Label nameLabel = new Label("Name");
         nameLabel.getStyleClass().add("instructor-label");
         TextField nameTextField = new TextField();
-        nameTextField.textProperty().addListener((observableValue, oddValue, newValue) -> tempEventName=nameTextField.getText());
+        nameTextField.textProperty().addListener((observableValue, oddValue, newValue) -> tempEventName = nameTextField.getText());
         nameTextField.setLayoutX(66);
         nameTextField.setMinWidth(253);
         nameTextField.setPromptText("(5 words maximum)");
@@ -213,7 +217,7 @@ public class CreateEvent extends Parent {
         Label noteLabel = new Label("Note");
         noteLabel.getStyleClass().add("instructor-label");
         TextArea noteTextArea = new TextArea();
-        noteTextArea.textProperty().addListener((observableValue, oddValue, newValue) -> tempEventNote=noteTextArea.getText());
+        noteTextArea.textProperty().addListener((observableValue, oddValue, newValue) -> tempEventNote = noteTextArea.getText());
         noteTextArea.setPrefRowCount(2);
         noteTextArea.setLayoutX(66); // 默认以下所有除label外第一个元素左端均为66
         noteTextArea.setPrefWidth(253);
@@ -254,6 +258,7 @@ public class CreateEvent extends Parent {
         fromHalfDayCBox.getSelectionModel().selectedIndexProperty().addListener((observableValue, oddValue, newValue) -> fromHalfDay=fromHalfDayCBox.getValue());
         fromHalfDayCBox.setLayoutX(66);
         fromHalfDayCBox.setPrefSize(98,27);
+
         ChoiceBox<String> fromHourCBox = new ChoiceBox<>();
         fromHourCBox.getItems().addAll("01","02","03","04","05","06","07","08","09","10","11","12");
         fromHourCBox.setValue("01");
@@ -261,6 +266,7 @@ public class CreateEvent extends Parent {
         fromHourCBox.getSelectionModel().selectedIndexProperty().addListener((observableValue, oddValue, newValue) -> fromHour=fromHourCBox.getValue());
         fromHourCBox.setLayoutX(190);
         fromHourCBox.setPrefSize(54,27);
+
         ChoiceBox<String> fromMinCBox = new ChoiceBox<>();
         fromMinCBox.getItems().addAll("00","01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50","51","52","53","54","55","56","57","58","59");
         fromMinCBox.setValue("00");
@@ -284,6 +290,7 @@ public class CreateEvent extends Parent {
         Pane untilGetter = new Pane();
         Label untilLabel = new Label("Until");
         untilLabel.getStyleClass().add("instructor-label");
+
         ChoiceBox<String> untilHalfDayCBox = new ChoiceBox();
         untilHalfDayCBox.getItems().addAll("AM","PM");
         untilHalfDayCBox.setValue("AM");
@@ -291,6 +298,7 @@ public class CreateEvent extends Parent {
         untilHalfDayCBox.getSelectionModel().selectedIndexProperty().addListener((observableValue, oddValue, newValue) -> untilHalfDay=untilHalfDayCBox.getValue());
         untilHalfDayCBox.setLayoutX(66);
         untilHalfDayCBox.setPrefSize(98,27);
+
         ChoiceBox<String> untilHourCBox = new ChoiceBox();
         untilHourCBox.getItems().addAll("01","02","03","04","05","06","07","08","09","10","11","12");
         untilHourCBox.setValue("01");
@@ -298,6 +306,7 @@ public class CreateEvent extends Parent {
         untilHourCBox.getSelectionModel().selectedIndexProperty().addListener((observableValue, oddValue, newValue) -> untilHour=untilHourCBox.getValue());
         untilHourCBox.setLayoutX(190);
         untilHourCBox.setPrefSize(54,27);
+
         ChoiceBox<String> untilMinCBox = new ChoiceBox();
         untilMinCBox.getItems().addAll("00","01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50","51","52","53","54","55","56","57","58","59");
         untilMinCBox.setValue("00");
